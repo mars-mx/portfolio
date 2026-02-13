@@ -1,0 +1,31 @@
+{
+  "Metadata": {
+    "title": "MX Digital Portfolio",
+    "description": "Portfolio von MX Digital"
+  },
+  "Language": {
+    "switchLabel": "Sprache wechseln"
+  },
+  "Footer": {
+    "imprint": "Impressum",
+    "privacy": "Datenschutzerklärung"
+  },
+  "Home": {
+    "headline": "Digitale Produkte mit klarer Struktur und modernem Anspruch designen und bauen.",
+    "description": "Eine minimalistische Landing-Basis mit Next.js, React, Tailwind CSS v4 und shadcn/ui. Weitere Sektionen und Projektinhalte folgen in den nächsten Issues.",
+    "viewWork": "Projekte ansehen",
+    "contact": "Kontakt"
+  },
+  "Imprint": {
+    "title": "Impressum",
+    "legalBasis": "Angaben gemäß § 5 DDG",
+    "country": "Deutschland",
+    "contactHeading": "Kontakt",
+    "responsibleHeading": "Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV"
+  },
+  "Privacy": {
+    "title": "Datenschutzerklärung",
+    "placeholderTitle": "Platzhalter",
+    "placeholderText": "Diese Datenschutzerklärung ist aktuell ein bewusst gekennzeichneter Platzhalter und wird in einem nachfolgenden Schritt vollständig ausgearbeitet."
+  }
+}

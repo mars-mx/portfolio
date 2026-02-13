@@ -1,0 +1,31 @@
+{
+  "Metadata": {
+    "title": "MX Digital Portfolio",
+    "description": "Portfolio by MX Digital"
+  },
+  "Language": {
+    "switchLabel": "Switch language"
+  },
+  "Footer": {
+    "imprint": "Legal notice",
+    "privacy": "Privacy policy"
+  },
+  "Home": {
+    "headline": "Designing and building digital products with clear structure and modern taste.",
+    "description": "A minimal landing foundation built with Next.js, React, Tailwind CSS v4, and shadcn/ui. More sections and project content will follow in upcoming issues.",
+    "viewWork": "View work",
+    "contact": "Contact"
+  },
+  "Imprint": {
+    "title": "Legal notice",
+    "legalBasis": "Information pursuant to Section 5 DDG",
+    "country": "Germany",
+    "contactHeading": "Contact",
+    "responsibleHeading": "Responsible for content pursuant to Section 18(2) MStV"
+  },
+  "Privacy": {
+    "title": "Privacy policy",
+    "placeholderTitle": "Placeholder",
+    "placeholderText": "This privacy policy is currently an explicitly marked placeholder and will be fully completed in a following step."
+  }
+}
