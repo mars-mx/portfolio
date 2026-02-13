@@ -18,10 +18,11 @@
   },
   "Imprint": {
     "title": "Legal notice",
-    "legalBasis": "Information pursuant to Section 5 DDG",
+    "legalBasis": "Information pursuant to Section 5 TMG",
     "country": "Germany",
     "contactHeading": "Contact",
-    "responsibleHeading": "Responsible for content pursuant to Section 18(2) MStV"
+    "responsibleHeading": "Responsible for content pursuant to Section 18(2) MStV",
+    "todoNotice": "TODO: If VAT ID, commercial register entries, or additional mandatory legal details are required for this offer, add them here."
   },
   "Privacy": {
     "title": "Privacy policy",
