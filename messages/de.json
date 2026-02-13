@@ -30,7 +30,59 @@
   },
   "Privacy": {
     "title": "Datenschutzerklärung",
-    "placeholderTitle": "Platzhalter",
-    "placeholderText": "Diese Datenschutzerklärung ist aktuell ein bewusst gekennzeichneter Platzhalter und wird in einem nachfolgenden Schritt vollständig ausgearbeitet."
+    "intro": {
+      "heading": "1. Einleitung",
+      "body": "Diese Datenschutzerklärung informiert über Art, Umfang und Zweck der Verarbeitung personenbezogener Daten beim Besuch dieser Website. Die Inhalte basieren auf der erfassten Struktur aus Issue #11."
+    },
+    "controller": {
+      "heading": "2. Verantwortlicher",
+      "phone": "Telefon: 015251600215",
+      "email": "E-Mail: marius@mxdigital.de"
+    },
+    "logfiles": {
+      "heading": "3. Datenerfassung beim Websitebesuch (Server-Logfiles)",
+      "body": "Beim Aufruf der Website werden technisch erforderliche Informationen automatisiert in Server-Logfiles gespeichert, um Stabilität, Sicherheit und Fehleranalyse zu gewährleisten.",
+      "items": {
+        "ip": "IP-Adresse des anfragenden Geräts",
+        "datetime": "Datum und Uhrzeit des Zugriffs",
+        "request": "Aufgerufene URL/Datei",
+        "referrer": "Referrer-URL",
+        "userAgent": "Browsertyp und Betriebssystem (User-Agent)",
+        "status": "HTTP-Statuscode und übertragene Datenmenge"
+      },
+      "encryption": "Die Übertragung zwischen Browser und Website erfolgt verschlüsselt (SSL/TLS)."
+    },
+    "cookies": {
+      "heading": "4. Cookies",
+      "body": "Die Website kann technisch notwendige Session-Cookies und – je nach eingesetzten Funktionen – persistente Cookies verwenden. Sie dienen der technischen Bereitstellung und Verbesserung der Nutzung.",
+      "legalBasis": "Rechtsgrundlage: berechtigtes Interesse an einer sicheren und funktionsfähigen Website sowie, soweit erforderlich, Einwilligung."
+    },
+    "contact": {
+      "heading": "5. Kontaktaufnahme",
+      "body": "Wenn Sie per E-Mail oder auf anderem Weg Kontakt aufnehmen, werden die übermittelten Daten zur Bearbeitung Ihrer Anfrage und für mögliche Anschlussfragen verarbeitet.",
+      "legalBasis": "Rechtsgrundlage: Vertragserfüllung/vorvertragliche Kommunikation, berechtigtes Interesse und ggf. Einwilligung."
+    },
+    "tools": {
+      "heading": "6. Seitenfunktionalitäten und Drittanbieter",
+      "body": "Sofern externe Dienste wie z. B. Google Web Fonts eingesetzt werden, kann es zu einer Übermittlung personenbezogener Daten an Drittanbieter kommen.",
+      "todo": "TODO: Konkrete eingesetzte Dienste, technische Einbindung, Rechtsgrundlage und Drittlandtransfer je Dienst final dokumentieren."
+    },
+    "rights": {
+      "heading": "7. Rechte betroffener Personen",
+      "items": {
+        "access": "Auskunft über gespeicherte personenbezogene Daten",
+        "rectification": "Berichtigung unrichtiger Daten",
+        "erasure": "Löschung der Daten, soweit keine Aufbewahrungspflichten entgegenstehen",
+        "restriction": "Einschränkung der Verarbeitung",
+        "portability": "Datenübertragbarkeit",
+        "objection": "Widerspruch gegen die Verarbeitung aus Gründen, die sich aus Ihrer besonderen Situation ergeben",
+        "withdrawal": "Widerruf erteilter Einwilligungen mit Wirkung für die Zukunft",
+        "complaint": "Beschwerde bei einer zuständigen Datenschutzaufsichtsbehörde"
+      }
+    },
+    "retention": {
+      "heading": "8. Speicherdauer",
+      "body": "Personenbezogene Daten werden nur so lange gespeichert, wie es für die jeweiligen Verarbeitungszwecke erforderlich ist oder gesetzliche Aufbewahrungsfristen bestehen. Anschließend werden Daten gelöscht oder anonymisiert."
+    }
   }
 }

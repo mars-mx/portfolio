@@ -29,8 +29,60 @@
     "responsibleHeading": "Responsible for content pursuant to Section 18(2) MStV"
   },
   "Privacy": {
-    "title": "Privacy policy",
-    "placeholderTitle": "Placeholder",
-    "placeholderText": "This privacy policy is currently an explicitly marked placeholder and will be fully completed in a following step."
+    "title": "Privacy Policy",
+    "intro": {
+      "heading": "1. Introduction",
+      "body": "This privacy policy explains the type, scope, and purpose of processing personal data when visiting this website. The structure is based on the captured content from Issue #11."
+    },
+    "controller": {
+      "heading": "2. Controller",
+      "phone": "Phone: +49 1525 1600215",
+      "email": "Email: marius@mxdigital.de"
+    },
+    "logfiles": {
+      "heading": "3. Data collection when visiting the website (server log files)",
+      "body": "When you access this website, technically required information is automatically stored in server log files to ensure stability, security, and error analysis.",
+      "items": {
+        "ip": "IP address of the requesting device",
+        "datetime": "Date and time of access",
+        "request": "Requested URL/file",
+        "referrer": "Referrer URL",
+        "userAgent": "Browser type and operating system (user agent)",
+        "status": "HTTP status code and transferred data volume"
+      },
+      "encryption": "Data transmission between browser and website is encrypted (SSL/TLS)."
+    },
+    "cookies": {
+      "heading": "4. Cookies",
+      "body": "The website may use technically necessary session cookies and, depending on implemented features, persistent cookies. They are used for technical operation and to improve usability.",
+      "legalBasis": "Legal basis: legitimate interest in a secure and functional website and, where required, your consent."
+    },
+    "contact": {
+      "heading": "5. Contact requests",
+      "body": "If you contact us via email or other channels, the submitted data is processed to handle your request and potential follow-up communication.",
+      "legalBasis": "Legal basis: contract performance/pre-contractual communication, legitimate interest, and where applicable, consent."
+    },
+    "tools": {
+      "heading": "6. Website features and third-party services",
+      "body": "If external services such as Google Web Fonts are used, personal data may be transmitted to third-party providers.",
+      "todo": "TODO: Finalize documentation of the exact services used, technical integration, legal basis, and third-country transfer details per service."
+    },
+    "rights": {
+      "heading": "7. Data subject rights",
+      "items": {
+        "access": "Right of access to stored personal data",
+        "rectification": "Right to rectification of inaccurate data",
+        "erasure": "Right to erasure, provided no statutory retention duties apply",
+        "restriction": "Right to restriction of processing",
+        "portability": "Right to data portability",
+        "objection": "Right to object to processing based on your particular situation",
+        "withdrawal": "Right to withdraw granted consent with effect for the future",
+        "complaint": "Right to lodge a complaint with a competent data protection supervisory authority"
+      }
+    },
+    "retention": {
+      "heading": "8. Storage period",
+      "body": "Personal data is stored only as long as necessary for the respective processing purpose or as required by statutory retention periods. Data is then deleted or anonymized."
+    }
   }
 }
