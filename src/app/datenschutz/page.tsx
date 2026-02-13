@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description: "Datenschutzhinweise von MX Digital",
 };
 
-export default function DatenschutzPage() {
+export default function PrivacyPolicyPage() {
   return (
     <section className="mx-auto w-full max-w-3xl px-6 py-16 sm:px-10">
       <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Datenschutzerklärung</h1>

@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description: "Impressum von MX Digital",
 };
 
-export default function ImpressumPage() {
+export default function LegalNoticePage() {
   return (
     <section className="mx-auto w-full max-w-3xl px-6 py-16 sm:px-10">
       <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Impressum</h1>
