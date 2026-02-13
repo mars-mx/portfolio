@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "MX Digital Portfolio",
-  description: "Portfolio von Marius Schäffer", 
+  description: "Portfolio von MX Digital",
 };
 
 export default function RootLayout({
