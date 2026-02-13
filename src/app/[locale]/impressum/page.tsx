@@ -34,10 +34,6 @@ export default async function LegalNoticePage({params}: LegalNoticePageProps) {
         <p>Hollerallee 87</p>
         <p>28209 Bremen</p>
       </div>
-
-      <p className="mt-10 rounded-md border border-amber-500/40 bg-amber-500/10 px-4 py-3 text-sm text-amber-100">
-        {t("todoNotice")}
-      </p>
     </section>
   );
 }
