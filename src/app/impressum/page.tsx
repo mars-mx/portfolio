@@ -32,10 +32,6 @@ export default function LegalNoticePage() {
         <p>28209 Bremen</p>
       </div>
 
-      <p className="mt-10 text-sm leading-6 text-neutral-400">
-        Hinweis: Die Pflichtangaben wurden entsprechend der gesetzlichen Mindestanforderungen für geschäftsmäßige
-        Telemedien (insb. § 5 DDG und § 18 MStV) zusammengestellt.
-      </p>
     </section>
   );
 }
