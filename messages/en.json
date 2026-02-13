@@ -16,6 +16,11 @@
     "viewWork": "View work",
     "contact": "Contact"
   },
+  "Hero": {
+    "label": "Portfolio",
+    "name": "Marius Schäffer",
+    "role": "Software Developer"
+  },
   "Imprint": {
     "title": "Legal notice",
     "legalBasis": "Information pursuant to Section 5 DDG",

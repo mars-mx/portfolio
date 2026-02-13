@@ -16,6 +16,11 @@
     "viewWork": "Projekte ansehen",
     "contact": "Kontakt"
   },
+  "Hero": {
+    "label": "Portfolio",
+    "name": "Marius Schäffer",
+    "role": "Softwareentwickler"
+  },
   "Imprint": {
     "title": "Impressum",
     "legalBasis": "Angaben gemäß § 5 DDG",
