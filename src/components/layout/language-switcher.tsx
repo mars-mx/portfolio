@@ -1,6 +1,8 @@
-import {getTranslations} from "next-intl/server";
+"use client";
+
+import {useTranslations} from "next-intl";
 import {routing, type AppLocale} from "@/i18n/routing";
-import {Link} from "@/i18n/navigation";
+import {Link, usePathname} from "@/i18n/navigation";
 
 type LanguageSwitcherProps = {
   locale: AppLocale;
@@ -11,8 +13,9 @@ const labels: Record<AppLocale, string> = {
   en: "EN",
 };
 
-export async function LanguageSwitcher({locale}: LanguageSwitcherProps) {
-  const t = await getTranslations("Language");
+export function LanguageSwitcher({locale}: LanguageSwitcherProps) {
+  const t = useTranslations("Language");
+  const pathname = usePathname();
 
   return (
     <nav aria-label={t("switchLabel")} className="flex items-center gap-2">
@@ -22,7 +25,7 @@ export async function LanguageSwitcher({locale}: LanguageSwitcherProps) {
         return (
           <Link
             key={item}
-            href="/"
+            href={pathname}
             locale={item}
             className={`rounded-full border px-3 py-1 text-xs tracking-[0.14em] transition ${
               isActive
