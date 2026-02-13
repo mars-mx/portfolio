@@ -18,8 +18,8 @@ export default async function LegalNoticePage({params}: LegalNoticePageProps) {
       <div className="mt-4 space-y-1 text-neutral-200">
         <p>Marius Schäffer</p>
         <p>MX Digital</p>
-        <p>Virchowstraße 3</p>
-        <p>04157 Leipzig</p>
+        <p>Hollerallee 87</p>
+        <p>28209 Bremen</p>
         <p>{t("country")}</p>
       </div>
 
@@ -31,8 +31,8 @@ export default async function LegalNoticePage({params}: LegalNoticePageProps) {
       <h2 className="mt-10 text-xl font-medium">{t("responsibleHeading")}</h2>
       <div className="mt-3 space-y-1 text-neutral-200">
         <p>Marius Schäffer</p>
-        <p>Virchowstraße 3</p>
-        <p>04157 Leipzig</p>
+        <p>Hollerallee 87</p>
+        <p>28209 Bremen</p>
       </div>
 
       <p className="mt-10 rounded-md border border-amber-500/40 bg-amber-500/10 px-4 py-3 text-sm text-amber-100">
