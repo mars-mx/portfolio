@@ -5,7 +5,7 @@ import { GitHubIcon, LinkedInIcon } from "@/components/icons"
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-border/60">
+    <footer className="border-t border-border/60 print:hidden">
       <div className="mx-auto flex max-w-5xl flex-col gap-4 px-4 py-8 text-sm sm:flex-row sm:items-center sm:justify-between sm:px-6">
         <div className="flex flex-col gap-1">
           <span className="font-mono font-semibold">{siteConfig.name}</span>

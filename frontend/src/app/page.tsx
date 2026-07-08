@@ -3,36 +3,13 @@ import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 
 import { siteConfig } from "@/lib/site"
+import { services } from "@/lib/profile"
 import { cn } from "@/lib/utils"
 import { GitHubIcon } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import { AnimatedShinyText } from "@/components/ui/animated-shiny-text"
 import { DotPattern } from "@/components/ui/dot-pattern"
 import { BlurFade } from "@/components/ui/blur-fade"
-
-const services = [
-  {
-    index: "01",
-    title: "Enterprise LLM-Agentensysteme",
-    description:
-      "Agentensysteme, die im Unternehmen produktiv laufen — Architektur, Orchestrierung, Evaluierung und Betrieb. Produktionsreif statt Proof of Concept.",
-    tags: ["Python", "Pydantic AI", "Multi-Agent-Architekturen", "Evals & Monitoring"],
-  },
-  {
-    index: "02",
-    title: "Tool-Anbindung & RAG",
-    description:
-      "Agenten, die wirklich arbeiten: angebunden an Ihre Systeme und Daten — Function Calling, MCP und RAG-Pipelines mit sauberem Grounding.",
-    tags: ["MCP", "Function Calling", "FastAPI", "Qdrant"],
-  },
-  {
-    index: "03",
-    title: "Context Engineering",
-    description:
-      "Die Disziplin hinter zuverlässigen LLM-Systemen: Was das Modell wann sieht — Prompts, Memory und Retrieval gezielt gestaltet, für messbar bessere Ergebnisse.",
-    tags: ["OpenAI, Anthropic & Gemini SDKs", "Prompt-Design", "Memory", "Token-Budget"],
-  },
-]
 
 const stack = [
   "Python",
