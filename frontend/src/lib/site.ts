@@ -8,7 +8,7 @@ export const siteConfig = {
   email: "marius@sxsolutions.de",
   nav: [
     { title: "Home", href: "/" },
-    { title: "Über mich", href: "/ueber-mich" },
+    { title: "Profil", href: "/ueber-mich" },
     { title: "Kontakt", href: "/kontakt" },
   ],
   social: {
