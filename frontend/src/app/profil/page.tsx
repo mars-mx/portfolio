@@ -10,6 +10,7 @@ import {
   services,
   techStack,
   werdegang,
+  type TimelineItem,
 } from "@/lib/profile"
 import { Button } from "@/components/ui/button"
 
@@ -33,6 +34,32 @@ function Chip({ children }: { children: React.ReactNode }) {
     <span className="rounded border border-zinc-200 bg-zinc-50 px-1.5 py-0.5 font-mono text-[8px] leading-relaxed text-zinc-500">
       {children}
     </span>
+  )
+}
+
+function ReaderHeading({ children }: { children: React.ReactNode }) {
+  return (
+    <h2 className="font-mono text-sm uppercase tracking-widest text-muted-foreground">
+      {children}
+    </h2>
+  )
+}
+
+function ReaderTimeline({ items }: { items: TimelineItem[] }) {
+  return (
+    <ul className="mt-5 space-y-4">
+      {items.map((item) => (
+        <li key={item.period + item.title}>
+          <p className="font-mono text-xs text-muted-foreground/70">
+            {item.period}
+          </p>
+          <p className="mt-0.5 font-medium">{item.title}</p>
+          {item.org ? (
+            <p className="text-sm text-muted-foreground">{item.org}</p>
+          ) : null}
+        </li>
+      ))}
+    </ul>
   )
 }
 
@@ -73,8 +100,106 @@ export default function ProfilPage() {
           </Button>
         </div>
 
-        {/* A4-Bogen */}
-        <div className="overflow-x-auto pb-12 print:overflow-visible print:pb-0">
+        {/* Reader-Ansicht — auf schmalen Viewports passt der A4-Bogen nicht */}
+        <div className="mx-auto max-w-2xl px-4 pb-16 sm:px-6 lg:hidden print:hidden">
+          <header className="flex items-start justify-between gap-4">
+            <div className="min-w-0">
+              <h1 className="text-2xl font-semibold tracking-tight">
+                {siteConfig.name}
+              </h1>
+              <p className="mt-1 text-muted-foreground">{siteConfig.tagline}</p>
+            </div>
+            <div className="relative size-16 shrink-0 overflow-hidden rounded-full border">
+              <Image
+                src="/marius_schaeffer.jpg"
+                alt="Marius Schäffer"
+                fill
+                sizes="64px"
+                className="object-cover"
+                priority
+              />
+            </div>
+          </header>
+          <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+            {siteConfig.description}
+          </p>
+          <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 font-mono text-xs text-muted-foreground">
+            <span>{siteConfig.email}</span>
+            <span>mxdigital.de</span>
+            <span>linkedin.com/in/mars-mx</span>
+            <span>github.com/mars-mx</span>
+          </div>
+
+          <section className="mt-10 border-t pt-8">
+            <ReaderHeading>Schwerpunkte</ReaderHeading>
+            <ul className="mt-5 space-y-5">
+              {services.map((s) => (
+                <li key={s.title} className="grid grid-cols-[24px_1fr] gap-x-3">
+                  <span className="pt-0.5 font-mono text-xs text-muted-foreground/70">
+                    {s.index}
+                  </span>
+                  <div>
+                    <h3 className="font-medium">{s.title}</h3>
+                    <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+                      {s.description}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <section className="mt-10">
+            <ReaderHeading>Projekthistorie</ReaderHeading>
+            <ul className="mt-5 space-y-6">
+              {projekte.map((p) => (
+                <li key={p.period + p.title}>
+                  <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground/70">
+                    {p.period} · {p.industry}
+                  </p>
+                  <h3 className="mt-1 font-medium">{p.title}</h3>
+                  <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+                    {p.note}
+                  </p>
+                  <p className="mt-1.5 font-mono text-xs text-muted-foreground/70">
+                    {p.stack.join(" · ")}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <section className="mt-10">
+            <ReaderHeading>Werdegang</ReaderHeading>
+            <ReaderTimeline items={werdegang} />
+          </section>
+
+          <section className="mt-10">
+            <ReaderHeading>Ausbildung</ReaderHeading>
+            <ReaderTimeline items={ausbildung} />
+          </section>
+
+          <section className="mt-10">
+            <ReaderHeading>Tech-Stack</ReaderHeading>
+            <ul className="mt-5 flex flex-wrap gap-2">
+              {techStack.map((tech) => (
+                <li
+                  key={tech}
+                  className="rounded-md border border-border/60 bg-muted/40 px-2.5 py-0.5 font-mono text-xs text-muted-foreground"
+                >
+                  {tech}
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <p className="mt-10 border-t pt-4 font-mono text-xs text-muted-foreground/70">
+            Stand: {stand}
+          </p>
+        </div>
+
+        {/* A4-Bogen — ab lg und im Druck */}
+        <div className="hidden overflow-x-auto pb-12 lg:block print:block print:overflow-visible print:pb-0">
           <div
             id="profil-sheet"
             className="mx-auto flex h-[297mm] w-[210mm] shrink-0 flex-col bg-white px-[14mm] py-[11mm] text-zinc-900 shadow-xl ring-1 ring-black/5 print:shadow-none print:ring-0"
