@@ -1,0 +1,164 @@
+name: Build and Publish Docker images
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  # Website (frontend/) — published as <repo>; the digest is written into the
+  # infra repo's kustomization (GitOps: push to main → Argo rolls the deploy).
+  build-web:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # Don't push on pull requests (no write access to GHCR from forks) —
+      # the build still runs as a validation step.
+      - name: Log in to GitHub Container Registry
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels)
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=sha,format=long
+            type=raw,value=latest,enable={{is_default_branch}}
+
+      - name: Build and push
+        id: build
+        uses: docker/build-push-action@v6
+        with:
+          context: frontend
+          push: ${{ github.event_name != 'pull_request' }}
+          # NEXT_PUBLIC_* is inlined at build time. Set the repository variable
+          # under Settings → Actions → Variables to https://mxdigital.de —
+          # without a value the contact form falls back to localhost.
+          build-args: |
+            NEXT_PUBLIC_API_URL=${{ vars.NEXT_PUBLIC_API_URL }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha,scope=web
+          cache-to: type=gha,mode=max,scope=web
+
+      - name: Deploy — write digest into infra repo
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ secrets.INFRA_REPO_TOKEN }}
+          DIGEST: ${{ steps.build.outputs.digest }}
+        run: |
+          set -euo pipefail
+          git clone --depth 1 \
+            "https://x-access-token:${GH_TOKEN}@github.com/sxsolutions/infrastructure.git" infra
+          cd infra
+          git config user.name  "mxdigital CI"
+          git config user.email "ci@mxdigital.de"
+          # Scoped to the marker block — the kustomization holds several
+          # CI-managed digests (web, api).
+          sed -i -E "/# mxdigital-web-image:start/,/# mxdigital-web-image:end/ s|(^[[:space:]]*digest: ).*|\1${DIGEST}|" \
+            kubernetes/apps/mxdigital/kustomization.yaml
+          git diff --quiet && { echo "Digest unchanged."; exit 0; }
+          git commit -am "chore(mxdigital): deploy web ${GITHUB_SHA} (${DIGEST})"
+          # The api job may push concurrently — rebase and retry.
+          for i in 1 2 3 4 5; do
+            git push origin HEAD:main && exit 0
+            git pull --rebase origin main
+          done
+          echo "push failed" >&2; exit 1
+
+  # Contact API (backend/) — separate image, published as <repo>/api; the
+  # digest is written into the infra repo like the website's, scoped to its
+  # own marker block in the kustomization.
+  build-api:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels)
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/api
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=sha,format=long
+            type=raw,value=latest,enable={{is_default_branch}}
+
+      - name: Build and push
+        id: build
+        uses: docker/build-push-action@v6
+        with:
+          context: backend
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha,scope=api
+          cache-to: type=gha,mode=max,scope=api
+
+      - name: Deploy — write digest into infra repo
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ secrets.INFRA_REPO_TOKEN }}
+          DIGEST: ${{ steps.build.outputs.digest }}
+        run: |
+          set -euo pipefail
+          git clone --depth 1 \
+            "https://x-access-token:${GH_TOKEN}@github.com/sxsolutions/infrastructure.git" infra
+          cd infra
+          git config user.name  "mxdigital CI"
+          git config user.email "ci@mxdigital.de"
+          sed -i -E "/# mxdigital-api-image:start/,/# mxdigital-api-image:end/ s|(^[[:space:]]*digest: ).*|\1${DIGEST}|" \
+            kubernetes/apps/mxdigital/kustomization.yaml
+          git diff --quiet && { echo "Digest unchanged."; exit 0; }
+          git commit -am "chore(mxdigital): deploy api ${GITHUB_SHA} (${DIGEST})"
+          # The web job may push concurrently — rebase and retry.
+          for i in 1 2 3 4 5; do
+            git push origin HEAD:main && exit 0
+            git pull --rebase origin main
+          done
+          echo "push failed" >&2; exit 1
