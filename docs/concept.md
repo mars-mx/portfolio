@@ -8,8 +8,9 @@
 ## 1. Ziel & Vision
 
 Aufwertung der bestehenden Portfolio-Seite von **Marius Schäffer / MX Digital**
-(Softwareentwickler & Webdesigner) zu einer technisch sauberen, schnellen und
-ästhetisch zurückhaltenden Developer-Homepage.
+(Softwareentwickler mit Fokus auf KI — LLM-Agentensysteme, Tool-Anbindung & RAG,
+Context Engineering) zu einer technisch sauberen, schnellen und ästhetisch
+zurückhaltenden Developer-Homepage.
 
 **Leitbild:** „Wie eine GitHub-Profilseite, nur als persönliche Marke." —
 viel Whitespace, monospace-Akzente, dezente Borders, keine grellen Farben,
@@ -18,11 +19,11 @@ Inhalt vor Effekt. Animationen subtil (MagicUI / Framer Motion), nie verspielt.
 ### Erfolgskriterien
 
 - [ ] Lighthouse: Performance / Accessibility / Best Practices / SEO jeweils ≥ 95
-- [ ] Voll funktionsfähiger Light/Dark Mode (System-Preference + Toggle, kein Flash)
+- [x] Voll funktionsfähiger Light/Dark Mode (System-Preference + Toggle, kein Flash)
 - [ ] Responsiv von 320px bis Ultrawide
-- [ ] Bestehende Inhalte (Über mich, Impressum, Datenschutz) übernommen
-- [ ] Kontaktformular schreibt an das FastAPI-Backend
-- [ ] Klare Trennung Frontend/Backend, lokal mit einem Befehl startbar
+- [x] Bestehende Inhalte (Über mich, Impressum, Datenschutz) übernommen
+- [x] Kontaktformular schreibt an das FastAPI-Backend
+- [x] Klare Trennung Frontend/Backend, lokal mit einem Befehl startbar (`make dev`)
 
 ---
 
@@ -34,7 +35,7 @@ Monorepo mit klarer Trennung von Frontend und Backend.
 mxdigital/
 ├── docs/
 │   └── concept.md          # dieses Dokument
-├── frontend/               # Next.js 15 (App Router, TypeScript)
+├── frontend/               # Next.js 16 (App Router, TypeScript)
 │   ├── src/app/            # Routes & Layouts
 │   ├── src/components/     # UI-Komponenten (shadcn) + MagicUI
 │   ├── src/lib/            # Utils, API-Client
@@ -72,7 +73,7 @@ Blog-Daten, Analytics-Proxy.
 
 | Bereich        | Wahl                          | Begründung |
 |----------------|-------------------------------|------------|
-| Framework      | Next.js 15 (App Router)       | SSG/SSR, beste DX, Vercel |
+| Framework      | Next.js 16 (App Router)       | SSG/SSR, beste DX, Vercel |
 | Sprache        | TypeScript                    | Typsicherheit |
 | Styling        | Tailwind CSS v4               | Utility-first, schnell |
 | Komponenten    | shadcn/ui                     | unstyled-by-default, voller Code-Besitz |
@@ -80,6 +81,7 @@ Blog-Daten, Analytics-Proxy.
 | Theming        | next-themes                   | Light/Dark ohne Flash |
 | Icons          | lucide-react                  | konsistent zu shadcn |
 | Fonts          | Geist Sans + Geist Mono       | klar, developer-affin |
+| PDF            | @react-pdf/renderer           | Profil-Onepager als `/profil.pdf`-Route |
 
 ### Backend
 
@@ -100,9 +102,9 @@ Akzentfarbe.
 
 ### Farben (über shadcn CSS-Variablen / Tailwind)
 
-- **Neutralbasis:** zinc / neutral Graustufen
-- **Akzent:** ein einziger Akzent-Ton (z.B. Blau/Indigo), sparsam eingesetzt
-- **Light & Dark:** über `:root` und `.dark` CSS-Variablen (HSL/oklch)
+- **Neutralbasis:** neutral Graustufen (shadcn baseColor `neutral`)
+- **Akzent:** bewusst keiner — durchgehend neutrale Palette (siehe §10)
+- **Light & Dark:** über `:root` und `.dark` CSS-Variablen (oklch) in `globals.css`
 
 ### Typografie
 
@@ -123,25 +125,32 @@ Akzentfarbe.
 
 | Route             | Inhalt |
 |-------------------|--------|
-| `/`               | Hero (Name, Tagline), Leistungen, Tech-Stack, ausgewählte Projekte, Kontakt-CTA |
-| `/ueber-mich`     | Werdegang, Skills, Foto, ausführlicher Text |
+| `/`               | Hero (Name, Tagline, CTAs), Schwerpunkte, Tech-Stack |
+| `/ueber-mich`     | Werdegang, Projekthistorie, Ausbildung, Tech-Stack |
+| `/kontakt`        | Kontaktformular → FastAPI |
+| `/profil`         | Profil-Onepager (HTML-Ansicht) |
+| `/profil.pdf`     | gleicher Inhalt als serverseitig generiertes PDF |
 | `/impressum`      | Impressum (rechtlich erforderlich) |
 | `/datenschutz`    | Datenschutzerklärung |
-| (optional) `/projekte` | Projekt-Übersicht |
 | (optional) `/blog`     | Technische Artikel |
+
+Inhalte liegen als Daten in `src/lib/site.ts` (Name, Tagline, Nav, Social) und
+`src/lib/profile.ts` (Schwerpunkte, Projekthistorie, Werdegang, Ausbildung,
+Tech-Stack) — Seiten und PDF konsumieren dieselbe Quelle.
 
 ### Globale Elemente
 
-- **Header:** Logo/Name links, Nav (Home, Über mich), Theme-Toggle, GitHub/LinkedIn
+- **Header:** Name/Brand links, Nav (Home, Profil, Kontakt), Theme-Toggle, GitHub/LinkedIn
 - **Footer:** Nav, Social-Links, Impressum/Datenschutz, Copyright
 
 ### Startseiten-Sektionen
 
-1. **Hero** — „Hi, ich bin Marius Schäffer" + Tagline, zwei CTAs (Kontakt, GitHub)
-2. **Leistungen** — Webdesign / Softwareentwicklung als Cards
-3. **Tech-Stack** — Logo-/Badge-Reihe (subtile MagicUI Marquee o.ä.)
-4. **Projekte** — Auswahl (Cards mit Link)
-5. **Kontakt** — Formular → FastAPI
+1. **Hero** — Name + Tagline, zwei CTAs (Kontakt, GitHub)
+2. **Schwerpunkte** — Enterprise LLM-Agentensysteme, Tool-Anbindung & RAG, Context Engineering als Cards
+3. **Tech-Stack** — statische Badge-Reihe
+
+Das Kontaktformular lebt auf `/kontakt` (nicht auf der Startseite); die
+Projekthistorie auf `/ueber-mich` bzw. im Profil-PDF.
 
 ---
 
@@ -165,12 +174,17 @@ Akzentfarbe.
 Antwort: `200 { "ok": true }` oder `422` bei Validierungsfehler.
 Spam-Schutz später via Honeypot/Rate-Limit. CORS auf die Frontend-Domain begrenzt.
 
+**Aktueller Stand:** Die Anfrage wird validiert und nur protokolliert —
+der Mailversand (Resend/Postmark/SMTP) ist noch nicht angebunden.
+
 ---
 
 ## 7. Konfiguration & Umgebungen
 
-- **Frontend:** `NEXT_PUBLIC_API_URL` zeigt auf das Backend (lokal `http://localhost:8000`)
+- **Frontend:** `NEXT_PUBLIC_API_URL` zeigt auf das Backend (lokal `http://localhost:8210`)
 - **Backend:** `.env` mit `CORS_ORIGINS`, später Mail-Credentials
+- **Lokale Ports:** bewusst nicht 3000/8000 — Frontend `3210`, Backend `8210`;
+  `make dev` setzt `NEXT_PUBLIC_API_URL` und `CORS_ORIGINS` automatisch passend
 - **Secrets:** nie committen; `.env.example` als Vorlage
 
 ---
@@ -192,14 +206,16 @@ Spam-Schutz später via Honeypot/Rate-Limit. CORS auf die Frontend-Domain begren
 - [x] Lauffähige Startseite & README
 
 **Phase 1 — Inhalt & Design**
-- [ ] Hero, Leistungen, Footer/Header final
-- [ ] Über mich, Impressum, Datenschutz migrieren
-- [ ] Theme-Feinschliff (Farben, Typo)
+- [x] Hero, Schwerpunkte, Footer/Header final
+- [x] Über mich, Impressum, Datenschutz migrieren
+- [x] Theme-Feinschliff (neutrale oklch-Palette, Geist)
+- [x] Profil-Onepager `/profil` mit PDF-Download `/profil.pdf`
 
 **Phase 2 — Funktion**
-- [ ] Kontaktformular ↔ Backend, Mailversand
-- [ ] Projekte-Sektion mit echten Inhalten
-- [ ] SEO (Metadata, OG-Images, Sitemap)
+- [x] Kontaktformular ↔ Backend (eigene Seite `/kontakt`)
+- [ ] Mailversand anbinden (Backend loggt bisher nur)
+- [x] Projekthistorie mit echten Inhalten (`/ueber-mich`, Profil-PDF)
+- [ ] SEO (OG-Images, Sitemap — Metadata pro Seite vorhanden)
 
 **Phase 3 — Optional**
 - [ ] Blog
@@ -211,7 +227,9 @@ Spam-Schutz später via Honeypot/Rate-Limit. CORS auf die Frontend-Domain begren
 ## 10. Offene Entscheidungen / Annahmen
 
 - **Mailversand:** Anbieter noch offen (Resend/Postmark/SMTP) — Stub vorerst.
-- **Projekte:** Inhalte/Quellen noch zu definieren (statisch vs. API).
+- **Projekte:** entschieden — statische Daten in `src/lib/profile.ts`
+  (Projekthistorie), keine API.
 - **Backend-Notwendigkeit:** Für eine reine Portfolio-Seite optional; hier
   bewusst vorgesehen für Kontaktformular und spätere dynamische Features.
-- **Akzentfarbe:** konkret noch festzulegen (Default: shadcn „zinc"/neutral).
+- **Akzentfarbe:** entschieden — keine; durchgehend neutrale shadcn-Palette
+  (baseColor „neutral").
