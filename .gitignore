@@ -1,0 +1,19 @@
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+
+# Node / Next
+node_modules/
+.next/
+
+# Python
+__pycache__/
+.venv/
+
+# Env files
+.env
+.env.local
+
+# Leeres Alt-Repo aus backend/ (kann gelöscht werden)
+.git.disabled/
