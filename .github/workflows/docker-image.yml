@@ -71,11 +71,14 @@ jobs:
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         env:
           GH_TOKEN: ${{ secrets.INFRA_REPO_TOKEN }}
+          # owner/repo slug of the (private) infra repo — kept out of this
+          # public file and masked in the run logs.
+          INFRA_REPO: ${{ secrets.INFRA_REPO }}
           DIGEST: ${{ steps.build.outputs.digest }}
         run: |
           set -euo pipefail
           git clone --depth 1 \
-            "https://x-access-token:${GH_TOKEN}@github.com/sxsolutions/infrastructure.git" infra
+            "https://x-access-token:${GH_TOKEN}@github.com/${INFRA_REPO}.git" infra
           cd infra
           git config user.name  "mxdigital CI"
           git config user.email "ci@mxdigital.de"
@@ -144,11 +147,14 @@ jobs:
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         env:
           GH_TOKEN: ${{ secrets.INFRA_REPO_TOKEN }}
+          # owner/repo slug of the (private) infra repo — kept out of this
+          # public file and masked in the run logs.
+          INFRA_REPO: ${{ secrets.INFRA_REPO }}
           DIGEST: ${{ steps.build.outputs.digest }}
         run: |
           set -euo pipefail
           git clone --depth 1 \
-            "https://x-access-token:${GH_TOKEN}@github.com/sxsolutions/infrastructure.git" infra
+            "https://x-access-token:${GH_TOKEN}@github.com/${INFRA_REPO}.git" infra
           cd infra
           git config user.name  "mxdigital CI"
           git config user.email "ci@mxdigital.de"
