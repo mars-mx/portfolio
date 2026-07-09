@@ -17,7 +17,7 @@ import { Button } from "@/components/ui/button"
 export const metadata: Metadata = {
   title: "Profil",
   description:
-    "Marius Schäffer — Profil als PDF: Schwerpunkte, Projekthistorie, Werdegang und Tech-Stack auf einer Seite.",
+    "Profil von Marius Schäffer als PDF: Schwerpunkte, Projekthistorie, Werdegang und Tech-Stack auf einer Seite.",
   robots: { index: false },
 }
 
@@ -155,7 +155,7 @@ export default function ProfilPage() {
               {projekte.map((p) => (
                 <li key={p.period + p.title}>
                   <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground/70">
-                    {p.period} · {p.industry}
+                    {p.period} · {p.industry} · {p.role}
                   </p>
                   <h3 className="mt-1 font-medium">{p.title}</h3>
                   <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
@@ -272,7 +272,7 @@ export default function ProfilPage() {
                     {projekte.map((p) => (
                       <li key={p.period + p.title}>
                         <p className="font-mono text-[8px] uppercase tracking-wider text-zinc-400">
-                          {p.period} · {p.industry}
+                          {p.period} · {p.industry} · {p.role}
                         </p>
                         <h3 className="mt-0.5 text-[11px] font-semibold leading-snug">
                           {p.title}

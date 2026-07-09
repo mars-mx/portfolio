@@ -18,7 +18,7 @@ import { GlassHoverCard } from "@/components/glass-hover-card"
 export const metadata: Metadata = {
   title: "Profil",
   description:
-    "Marius Schäffer — Softwareentwickler mit Fokus auf KI. Werdegang, Ausbildung und Tech-Stack.",
+    "Marius Schäffer, Softwareentwickler mit Fokus auf KI. Werdegang, Ausbildung und Tech-Stack.",
 }
 
 function Timeline({ items }: { items: TimelineItem[] }) {
@@ -105,20 +105,20 @@ export default function UeberMichPage() {
 
           <div className="space-y-4">
             <p>
-              Ich bin Marius Schäffer — Softwareentwickler mit Fokus auf
+              Ich bin Marius Schäffer, Softwareentwickler mit Fokus auf
               Künstliche Intelligenz. Aus Begeisterung beschäftige ich mich seit
               meiner Kindheit mit allen Themen rund um den Computer.
             </p>
             <p>
               Mein Schwerpunkt sind LLM-Agentensysteme für den Enterprise-Einsatz:
               Tool-Anbindung &amp; RAG, Context Engineering und die Automatisierung
-              ganzer Geschäftsprozesse — von der Architektur bis zum produktiven
+              ganzer Geschäftsprozesse, von der Architektur bis zum produktiven
               Betrieb.
             </p>
             <p>
               Neben der Technik beschäftige ich mich mit Individualpsychologie und
-              Coaching — eine Perspektive, die mir hilft, Menschen und ihre
-              Probleme hinter der Software wirklich zu verstehen.
+              Coaching. Am Ende des Tages ist Software ein Tool, das Menschen
+              hilft, ihre Aufgaben &amp; Ziele zu erreichen.
             </p>
           </div>
         </div>

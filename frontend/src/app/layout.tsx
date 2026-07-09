@@ -21,10 +21,10 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://mxdigital.de"),
   title: {
     default: "Marius Schäffer — Softwareentwickler mit Fokus auf KI",
-    template: "%s · MX Digital",
+    template: "%s · Marius Schäffer",
   },
   description:
-    "Marius Schäffer (MX Digital) — Enterprise LLM-Agentensysteme, Tool-Anbindung & RAG, Context Engineering. KI-Entwicklung und Prozessautomatisierung für Unternehmen.",
+    "Marius Schäffer (MX Digital): Enterprise LLM-Agentensysteme, Tool-Anbindung & RAG, Context Engineering. KI-Entwicklung und Prozessautomatisierung für Unternehmen.",
 };
 
 export default function RootLayout({

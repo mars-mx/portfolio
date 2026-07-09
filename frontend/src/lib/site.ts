@@ -3,7 +3,7 @@ export const siteConfig = {
   brand: "MX Digital",
   tagline: "Softwareentwickler mit Fokus auf KI",
   description:
-    "Ich entwickle LLM-Agentensysteme für den Enterprise-Einsatz — Tool-Anbindung & RAG, Context Engineering. Produktionsreif, messbar, DSGVO-konform.",
+    "Ich entwickle LLM-Agentensysteme für den Enterprise-Einsatz: Tool-Anbindung & RAG, Context Engineering. Produktionsreif, messbar, DSGVO-konform.",
   url: "https://mxdigital.de",
   email: "marius@sxsolutions.de",
   nav: [

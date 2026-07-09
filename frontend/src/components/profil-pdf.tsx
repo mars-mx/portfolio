@@ -299,7 +299,7 @@ export function ProfilPdf({ stand }: { stand: string }) {
                 {projekte.map((p) => (
                   <View key={p.period + p.title}>
                     <Text style={s.micro}>
-                      {p.period} · {p.industry}
+                      {p.period} · {p.industry} · {p.role}
                     </Text>
                     <Text style={[s.itemTitle, { marginTop: 1.5 }]}>
                       {p.title}

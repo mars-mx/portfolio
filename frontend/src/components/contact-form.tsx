@@ -24,7 +24,7 @@ export function ContactForm() {
         email: String(data.get("email") ?? ""),
         message: String(data.get("message") ?? ""),
       })
-      toast.success("Nachricht gesendet — danke! Ich melde mich.")
+      toast.success("Nachricht gesendet, danke! Ich melde mich.")
       form.reset()
     } catch (err) {
       toast.error("Konnte nicht gesendet werden.", {
