@@ -13,6 +13,11 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 export NEXT_PUBLIC_API_URL="http://localhost:${BACKEND_PORT}"
 export CORS_ORIGINS="http://localhost:${FRONTEND_PORT}"
 
+# Lokale Secrets (z. B. OPENAI_API_KEY) aus backend/.env laden, falls vorhanden.
+# uv --env-file überschreibt bereits gesetzte Umgebungsvariablen nicht.
+UV_ENV_FILE=""
+[[ -f "$ROOT/backend/.env" ]] && UV_ENV_FILE="--env-file .env"
+
 echo "▶ Backend  → http://localhost:${BACKEND_PORT}  (Docs: /docs)"
 echo "▶ Frontend → http://localhost:${FRONTEND_PORT}"
 echo "  (Strg+C beendet beide)"
@@ -28,7 +33,8 @@ cleanup() {
 }
 trap cleanup INT TERM EXIT
 
-( cd "$ROOT/backend"  && exec uv run uvicorn app.main:app --reload --port "$BACKEND_PORT" ) &
+# --reload-include: auch Änderungen an der Wissensbasis (knowledge/*.md) neu laden.
+( cd "$ROOT/backend"  && exec uv run $UV_ENV_FILE uvicorn app.main:app --reload --reload-include '*.md' --port "$BACKEND_PORT" ) &
 pids+=("$!")
 
 ( cd "$ROOT/frontend" && exec pnpm dev --port "$FRONTEND_PORT" ) &
