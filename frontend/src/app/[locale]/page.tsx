@@ -3,13 +3,13 @@ import Image from "next/image"
 import { ArrowRight } from "lucide-react"
 import { getTranslations, setRequestLocale } from "next-intl/server"
 
-import { Link } from "@/i18n/navigation"
 import { localeAlternates } from "@/i18n/alternates"
 import type { Locale } from "@/i18n/routing"
 import { siteConfig, siteText } from "@/lib/site"
 import { profileContent } from "@/lib/profile"
 import { cn } from "@/lib/utils"
 import { GitHubIcon } from "@/components/icons"
+import { ContactMenu } from "@/components/contact-menu"
 import { Button } from "@/components/ui/button"
 import { AnimatedShinyText } from "@/components/ui/animated-shiny-text"
 import { DotPattern } from "@/components/ui/dot-pattern"
@@ -89,12 +89,7 @@ export default async function Home({ params }: Props) {
 
             <BlurFade delay={0.4}>
               <div className="mt-8 flex flex-wrap gap-3">
-                <Button size="lg" asChild>
-                  <Link href="/kontakt">
-                    {t("ctaKontakt")}
-                    <ArrowRight className="size-4" />
-                  </Link>
-                </Button>
+                <ContactMenu size="lg" label={t("ctaKontakt")} />
                 <Button size="lg" variant="outline" asChild>
                   <a href={siteConfig.social.github} target="_blank" rel="noreferrer">
                     <GitHubIcon className="size-4" />

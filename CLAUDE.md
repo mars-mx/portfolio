@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-Personal developer homepage of Marius Schäffer (mxdigital.de). Monorepo with a Next.js frontend and a FastAPI backend. All site content and UI copy is **German** (routes: `/ueber-mich`, `/kontakt`, `/impressum`, `/datenschutz`, `/profil`). Design concept, API contract, and roadmap live in `docs/concept.md` — the guiding aesthetic is "GitHub profile page as a personal brand": neutral zinc palette, 1px borders instead of shadows, subtle motion, content over effect.
+Personal developer homepage of Marius Schäffer (mxdigital.de). Monorepo with a Next.js frontend and a FastAPI backend. All site content and UI copy is **German** (routes: `/ueber-mich`, `/impressum`, `/datenschutz`, `/profil`). Design concept, API contract, and roadmap live in `docs/concept.md` — the guiding aesthetic is "GitHub profile page as a personal brand": neutral zinc palette, 1px borders instead of shadows, subtle motion, content over effect.
 
 ## Commands
 
@@ -34,10 +34,10 @@ Use **Conventional Commits**: `type(scope): description` — e.g. `feat(frontend
 
 - **Content lives as data, not in pages.** `src/lib/site.ts` holds site config (name, tagline, nav, social links); `src/lib/profile.ts` holds the full profile content (services, projekte, werdegang, ausbildung, techStack). This data is consumed by both the HTML pages **and** the PDF — edit content there, not in the page components.
 - **PDF generation:** `src/app/profil.pdf/route.ts` is a route handler that renders `src/components/profil-pdf.tsx` server-side via `@react-pdf/renderer`, using the local Geist TTFs in `src/fonts/`. The `/profil` page is the HTML counterpart of the same data.
-- **API client:** `src/lib/api.ts` — reads `NEXT_PUBLIC_API_URL`; the contact form (`src/components/contact-form.tsx`) posts to `POST /api/contact` on the backend.
+- **Contact:** there is no contact page/form — the "Kontakt" entries (hero CTA + header) open `src/components/contact-menu.tsx`, a dropdown with WhatsApp and mailto links from `siteConfig`. Nothing in the frontend currently calls the backend.
 - **UI components:** `src/components/ui/` mixes shadcn/ui primitives and MagicUI effect components (blur-fade, border-beam, dot-pattern, …). shadcn config in `components.json` (style `radix-nova`, base color `neutral`, lucide icons, `@/` aliases). Tailwind v4 has no config file — theme tokens are oklch CSS variables in `src/app/globals.css` (`:root` + `.dark`), dark mode via next-themes and the `@custom-variant dark`.
 - **Tailwind v4 / Lightning CSS gotcha:** when writing raw CSS with `backdrop-filter`, put `-webkit-backdrop-filter` **before** the unprefixed property (see `globals.css` glass styles) — the other order breaks the blur in Chrome.
 
 ### Backend (`backend/` — FastAPI, Python ≥3.12, uv)
 
-Small and deliberate: `app/main.py` (app entry, CORS middleware, `GET /api/health`), `app/api/routes.py` (`POST /api/contact` — currently **only logs** the request; e-mail delivery via Resend/Postmark/SMTP is a TODO), `app/schemas/contact.py` (Pydantic models), `app/core/config.py` (pydantic-settings loading `.env`; `CORS_ORIGINS` is a comma-separated string).
+Small and deliberate: `app/main.py` (app entry, CORS middleware, `GET /api/health`), `app/api/routes.py` (`POST /api/contact` — currently **only logs** the request and has no frontend caller since the contact form was removed), `app/schemas/contact.py` (Pydantic models), `app/core/config.py` (pydantic-settings loading `.env`; `CORS_ORIGINS` is a comma-separated string).

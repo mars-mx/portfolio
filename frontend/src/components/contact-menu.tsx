@@ -1,0 +1,65 @@
+"use client"
+
+import { ChevronDown, Mail } from "lucide-react"
+import { useTranslations } from "next-intl"
+import { toast } from "sonner"
+
+import { siteConfig } from "@/lib/site"
+import { WhatsAppIcon } from "@/components/icons"
+import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+
+type Props = {
+  label: string
+  size?: React.ComponentProps<typeof Button>["size"]
+  variant?: React.ComponentProps<typeof Button>["variant"]
+}
+
+export function ContactMenu({ label, size, variant }: Props) {
+  const t = useTranslations("contactMenu")
+
+  // mailto: läuft ohne verknüpftes Mail-Programm (oder im eingebetteten
+  // Browser) ins Leere — deshalb zusätzlich kopieren und bestätigen.
+  async function handleEmailClick() {
+    try {
+      await navigator.clipboard.writeText(siteConfig.email)
+      toast.success(t("emailCopied"), { description: siteConfig.email })
+    } catch {
+      toast(siteConfig.email)
+    }
+  }
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button size={size} variant={variant}>
+          {label}
+          <ChevronDown className="size-4" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="start">
+        <DropdownMenuItem asChild>
+          <a
+            href={siteConfig.whatsapp}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <WhatsAppIcon />
+            {t("whatsapp")}
+          </a>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <a href={`mailto:${siteConfig.email}`} onClick={handleEmailClick}>
+            <Mail />
+            {t("email")}
+          </a>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
+}

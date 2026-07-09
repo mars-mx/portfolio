@@ -4,13 +4,13 @@ import { Link } from "@/i18n/navigation"
 import { siteConfig } from "@/lib/site"
 import { GitHubIcon, LinkedInIcon } from "@/components/icons"
 import { Button } from "@/components/ui/button"
+import { ContactMenu } from "@/components/contact-menu"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { LocaleSwitcher } from "@/components/locale-switcher"
 
 const navItems = [
   { key: "home", href: "/" },
   { key: "profil", href: "/ueber-mich" },
-  { key: "kontakt", href: "/kontakt" },
 ] as const
 
 export function SiteHeader() {
@@ -39,6 +39,7 @@ export function SiteHeader() {
               <Link href={item.href}>{t(item.key)}</Link>
             </Button>
           ))}
+          <ContactMenu size="sm" variant="ghost" label={t("kontakt")} />
           <span className="mx-1 hidden h-5 w-px bg-border sm:block" />
           <Button
             variant="ghost"

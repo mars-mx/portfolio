@@ -8,7 +8,6 @@ export const routing = defineRouting({
   pathnames: {
     "/": "/",
     "/ueber-mich": { de: "/ueber-mich", en: "/about" },
-    "/kontakt": { de: "/kontakt", en: "/contact" },
     "/profil": { de: "/profil", en: "/profile" },
     // Rechtstexte bleiben deutsch, daher auch keine übersetzten Pfade.
     "/impressum": "/impressum",

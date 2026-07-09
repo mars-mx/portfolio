@@ -4,7 +4,8 @@ export const siteConfig = {
   name: "Marius Schäffer",
   brand: "MX Digital",
   url: "https://mxdigital.de",
-  email: "marius@sxsolutions.de",
+  email: "marius@mxdigital.de",
+  whatsapp: "https://wa.me/4915251600215",
   social: {
     github: "https://github.com/mars-mx",
     linkedin: "https://linkedin.com/in/mars-mx/",

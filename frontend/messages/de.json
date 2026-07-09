@@ -41,19 +41,10 @@
     "download": "PDF herunterladen",
     "stand": "Stand: {date}"
   },
-  "kontakt": {
-    "title": "Kontakt",
-    "metaDescription": "Schreib mir: Projekt, Idee oder Frage. Ich melde mich.",
-    "intro": "Eine Idee, ein Projekt oder eine Frage? Schreib mir, ich melde mich.",
-    "form": {
-      "name": "Name",
-      "email": "E-Mail",
-      "message": "Nachricht",
-      "submit": "Nachricht senden",
-      "submitting": "Senden…",
-      "success": "Nachricht gesendet, danke! Ich melde mich.",
-      "error": "Konnte nicht gesendet werden."
-    }
+  "contactMenu": {
+    "whatsapp": "WhatsApp",
+    "email": "E-Mail",
+    "emailCopied": "E-Mail-Adresse kopiert"
   },
   "impressum": {
     "title": "Impressum"
