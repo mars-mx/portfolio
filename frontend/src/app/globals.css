@@ -103,6 +103,18 @@
   }
 }
 
+/* Hero-Intro: reine CSS-Animation statt hydration-gesteuertem motion/react.
+   Läuft ab dem ersten Paint — der LCP hängt so nicht am JS-Download, und
+   sichtbarer Inhalt springt nicht nachträglich (Nutzung via
+   animate-[hero-enter_…] mit animation-delay im Shorthand). */
+@keyframes hero-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+    filter: blur(6px);
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

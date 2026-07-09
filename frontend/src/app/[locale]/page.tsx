@@ -58,7 +58,7 @@ export default async function Home({ params }: Props) {
         />
         <div className="mx-auto flex max-w-5xl flex-col-reverse items-start gap-10 px-4 py-24 sm:px-6 sm:py-32 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <BlurFade delay={0.1}>
+            <div className="motion-safe:animate-[hero-enter_0.4s_ease-out_0.1s_backwards]">
               <a
                 href={siteConfig.social.github}
                 target="_blank"
@@ -71,23 +71,23 @@ export default async function Home({ params }: Props) {
                   <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" />
                 </AnimatedShinyText>
               </a>
-            </BlurFade>
+            </div>
 
-            <BlurFade delay={0.2}>
+            <div className="motion-safe:animate-[hero-enter_0.4s_ease-out_0.2s_backwards]">
               <h1 className="max-w-3xl text-balance text-4xl font-semibold tracking-tight sm:text-5xl">
                 {t("greeting", { name: siteConfig.name })}
                 <br />
                 <span className="text-muted-foreground">{tagline}.</span>
               </h1>
-            </BlurFade>
+            </div>
 
-            <BlurFade delay={0.3}>
+            <div className="motion-safe:animate-[hero-enter_0.4s_ease-out_0.3s_backwards]">
               <p className="mt-6 max-w-2xl text-pretty text-lg text-muted-foreground">
                 {description}
               </p>
-            </BlurFade>
+            </div>
 
-            <BlurFade delay={0.4}>
+            <div className="motion-safe:animate-[hero-enter_0.4s_ease-out_0.4s_backwards]">
               <div className="mt-8 flex flex-wrap gap-3">
                 <ContactMenu size="lg" label={t("ctaKontakt")} />
                 <Button size="lg" variant="outline" asChild>
@@ -97,10 +97,10 @@ export default async function Home({ params }: Props) {
                   </a>
                 </Button>
               </div>
-            </BlurFade>
+            </div>
           </div>
 
-          <BlurFade delay={0.2} className="shrink-0">
+          <div className="shrink-0 motion-safe:animate-[hero-enter_0.4s_ease-out_0.2s_backwards]">
             <div className="relative size-32 overflow-hidden rounded-full border border-border/60 bg-muted sm:size-40 lg:size-52">
               <Image
                 src="/marius_schaeffer.jpg"
@@ -111,7 +111,7 @@ export default async function Home({ params }: Props) {
                 priority
               />
             </div>
-          </BlurFade>
+          </div>
         </div>
       </section>
 

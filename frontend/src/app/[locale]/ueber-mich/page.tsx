@@ -109,7 +109,7 @@ export default async function UeberMichPage({ params }: Props) {
         </Button>
       }
     >
-      <BlurFade delay={0.1}>
+      <div className="motion-safe:animate-[hero-enter_0.4s_ease-out_0.1s_backwards]">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:gap-8">
           <div className="relative size-28 shrink-0 overflow-hidden rounded-full border bg-muted sm:size-32">
             <Image
@@ -128,7 +128,7 @@ export default async function UeberMichPage({ params }: Props) {
             <p>{t("intro3")}</p>
           </div>
         </div>
-      </BlurFade>
+      </div>
 
       <Section title={tSections("werdegang")}>
         <Timeline items={werdegang} detailsLabel={t("inhalte")} />
