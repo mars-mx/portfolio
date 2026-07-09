@@ -12,6 +12,13 @@ class Settings(BaseSettings):
     # Komma-separierte Liste erlaubter Frontend-Origins für CORS.
     cors_origins: str = "http://localhost:3000"
 
+    # Provider-agnostischer Pydantic-AI-Modellstring ("<provider>:<modell>").
+    # Der zugehörige API-Key kommt aus der Prozessumgebung (z. B. OPENAI_API_KEY).
+    ai_model: str = "openai:gpt-5.5"
+
+    # OpenAI-Embedding-Modell für die Wissensbasis-Suche.
+    embedding_model: str = "text-embedding-3-small"
+
     @property
     def cors_origins_list(self) -> list[str]:
         return [o.strip() for o in self.cors_origins.split(",") if o.strip()]
