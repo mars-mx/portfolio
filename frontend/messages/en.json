@@ -6,6 +6,7 @@
   "nav": {
     "home": "Home",
     "profil": "Profile",
+    "chat": "Chat",
     "kontakt": "Contact"
   },
   "localeSwitcher": {
@@ -40,6 +41,25 @@
     "back": "Back",
     "download": "Download PDF",
     "stand": "As of {date}"
+  },
+  "chat": {
+    "title": "Chat",
+    "metaDescription": "AI assistant of Marius Schäffer: ask about projects, experience and tech stack directly in the chat.",
+    "welcomeTitle": "How can I help?",
+    "welcomeHint": "Ask me anything about Marius, his projects or his tech stack.",
+    "composerPlaceholder": "Send a message …",
+    "send": "Send",
+    "cancel": "Stop",
+    "copy": "Copy",
+    "retry": "Regenerate",
+    "edit": "Edit",
+    "editCancel": "Cancel",
+    "editUpdate": "Update",
+    "scrollToBottom": "Scroll to bottom",
+    "searchRunning": "Searching knowledge base …",
+    "searchTitle": "Knowledge base searched",
+    "searchQuery": "Search query",
+    "searchFailed": "Knowledge base search failed"
   },
   "contactMenu": {
     "whatsapp": "WhatsApp",

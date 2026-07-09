@@ -6,6 +6,7 @@
   "nav": {
     "home": "Home",
     "profil": "Profil",
+    "chat": "Chat",
     "kontakt": "Kontakt"
   },
   "localeSwitcher": {
@@ -40,6 +41,25 @@
     "back": "Zurück",
     "download": "PDF herunterladen",
     "stand": "Stand: {date}"
+  },
+  "chat": {
+    "title": "Chat",
+    "metaDescription": "KI-Assistent von Marius Schäffer: Fragen zu Projekten, Werdegang und Tech-Stack direkt im Chat stellen.",
+    "welcomeTitle": "Wie kann ich helfen?",
+    "welcomeHint": "Frag mich etwas über Marius, seine Projekte oder seinen Tech-Stack.",
+    "composerPlaceholder": "Nachricht schreiben …",
+    "send": "Senden",
+    "cancel": "Stoppen",
+    "copy": "Kopieren",
+    "retry": "Neu generieren",
+    "edit": "Bearbeiten",
+    "editCancel": "Abbrechen",
+    "editUpdate": "Aktualisieren",
+    "scrollToBottom": "Nach unten scrollen",
+    "searchRunning": "Durchsuche Wissensbasis …",
+    "searchTitle": "Wissensbasis durchsucht",
+    "searchQuery": "Suchanfrage",
+    "searchFailed": "Wissensbasis-Suche fehlgeschlagen"
   },
   "contactMenu": {
     "whatsapp": "WhatsApp",
