@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { useTranslations } from "next-intl"
 import { toast } from "sonner"
 
 import { sendContact } from "@/lib/api"
@@ -10,6 +11,7 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 
 export function ContactForm() {
+  const t = useTranslations("kontakt.form")
   const [pending, setPending] = React.useState(false)
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -24,10 +26,10 @@ export function ContactForm() {
         email: String(data.get("email") ?? ""),
         message: String(data.get("message") ?? ""),
       })
-      toast.success("Nachricht gesendet, danke! Ich melde mich.")
+      toast.success(t("success"))
       form.reset()
     } catch (err) {
-      toast.error("Konnte nicht gesendet werden.", {
+      toast.error(t("error"), {
         description: err instanceof Error ? err.message : undefined,
       })
     } finally {
@@ -38,11 +40,11 @@ export function ContactForm() {
   return (
     <form onSubmit={onSubmit} className="grid gap-4">
       <div className="grid gap-2">
-        <Label htmlFor="name">Name</Label>
+        <Label htmlFor="name">{t("name")}</Label>
         <Input id="name" name="name" required maxLength={100} autoComplete="name" />
       </div>
       <div className="grid gap-2">
-        <Label htmlFor="email">E-Mail</Label>
+        <Label htmlFor="email">{t("email")}</Label>
         <Input
           id="email"
           name="email"
@@ -52,11 +54,11 @@ export function ContactForm() {
         />
       </div>
       <div className="grid gap-2">
-        <Label htmlFor="message">Nachricht</Label>
+        <Label htmlFor="message">{t("message")}</Label>
         <Textarea id="message" name="message" required maxLength={5000} rows={5} />
       </div>
       <Button type="submit" disabled={pending} className="justify-self-start">
-        {pending ? "Senden…" : "Nachricht senden"}
+        {pending ? t("submitting") : t("submit")}
       </Button>
     </form>
   )

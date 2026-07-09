@@ -1,0 +1,68 @@
+{
+  "metadata": {
+    "title": "Marius Schäffer — Software Engineer Focused on AI",
+    "description": "Marius Schäffer (MX Digital): enterprise LLM agent systems, tool integration & RAG, context engineering. AI development and process automation for businesses."
+  },
+  "nav": {
+    "home": "Home",
+    "profil": "Profile",
+    "kontakt": "Contact"
+  },
+  "localeSwitcher": {
+    "label": "Zur deutschen Version wechseln"
+  },
+  "footer": {
+    "impressum": "Legal Notice",
+    "datenschutz": "Privacy Policy"
+  },
+  "sections": {
+    "schwerpunkte": "Focus Areas",
+    "projekthistorie": "Project History",
+    "werdegang": "Experience",
+    "ausbildung": "Education",
+    "techStack": "Tech Stack"
+  },
+  "home": {
+    "greeting": "Hi, I'm {name}.",
+    "ctaKontakt": "Get in touch"
+  },
+  "about": {
+    "title": "Profile",
+    "metaDescription": "Marius Schäffer, software engineer focused on AI. Experience, education and tech stack.",
+    "intro1": "I'm Marius Schäffer, a software engineer focused on artificial intelligence. Computers and everything around them have fascinated me since childhood.",
+    "intro2": "My focus is LLM agent systems for enterprise use: tool integration & RAG, context engineering and the automation of entire business processes, from architecture to production operations.",
+    "intro3": "Beyond the tech, I explore individual psychology and coaching. At the end of the day, software is a tool that helps people get their work done and reach their goals.",
+    "inhalte": "Contents"
+  },
+  "profil": {
+    "title": "Profile",
+    "metaDescription": "Profile of Marius Schäffer as a PDF: focus areas, project history, experience and tech stack on one page.",
+    "back": "Back",
+    "download": "Download PDF",
+    "stand": "As of {date}"
+  },
+  "kontakt": {
+    "title": "Contact",
+    "metaDescription": "Write to me: project, idea or question. I'll get back to you.",
+    "intro": "An idea, a project or a question? Write to me and I'll get back to you.",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "submit": "Send message",
+      "submitting": "Sending…",
+      "success": "Message sent, thank you! I'll get back to you.",
+      "error": "The message could not be sent."
+    }
+  },
+  "impressum": {
+    "title": "Legal Notice"
+  },
+  "datenschutz": {
+    "metaTitle": "Privacy Policy",
+    "title": "Privacy Policy"
+  },
+  "legal": {
+    "germanOnly": "This page is available in German only."
+  }
+}

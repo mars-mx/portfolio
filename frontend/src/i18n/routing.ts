@@ -1,0 +1,19 @@
+import { defineRouting } from "next-intl/routing"
+
+export const routing = defineRouting({
+  locales: ["de", "en"],
+  defaultLocale: "de",
+  // Deutsch bleibt ohne Prefix auf den bisherigen Pfaden, Englisch unter /en/…
+  localePrefix: "as-needed",
+  pathnames: {
+    "/": "/",
+    "/ueber-mich": { de: "/ueber-mich", en: "/about" },
+    "/kontakt": { de: "/kontakt", en: "/contact" },
+    "/profil": { de: "/profil", en: "/profile" },
+    // Rechtstexte bleiben deutsch, daher auch keine übersetzten Pfade.
+    "/impressum": "/impressum",
+    "/datenschutz": "/datenschutz",
+  },
+})
+
+export type Locale = (typeof routing.locales)[number]

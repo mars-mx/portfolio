@@ -10,15 +10,9 @@ import {
   View,
 } from "@react-pdf/renderer"
 
-import { siteConfig } from "@/lib/site"
-import {
-  ausbildung,
-  projekte,
-  services,
-  techStack,
-  werdegang,
-  type TimelineItem,
-} from "@/lib/profile"
+import type { Locale } from "@/i18n/routing"
+import { siteConfig, siteText } from "@/lib/site"
+import { profileContent, techStack, type TimelineItem } from "@/lib/profile"
 
 const fontsDir = path.join(process.cwd(), "src/fonts")
 
@@ -240,18 +234,39 @@ function SideTimeline({ items }: { items: TimelineItem[] }) {
   )
 }
 
-export function ProfilPdf({ stand }: { stand: string }) {
+export type ProfilPdfLabels = {
+  title: string
+  stand: string
+  schwerpunkte: string
+  projekthistorie: string
+  werdegang: string
+  ausbildung: string
+  techStack: string
+}
+
+export function ProfilPdf({
+  locale,
+  labels,
+}: {
+  locale: Locale
+  labels: ProfilPdfLabels
+}) {
+  const { services, werdegang, ausbildung, projekte } = profileContent[locale]
+  const { tagline, description } = siteText[locale]
+
   return (
     <Document
-      title={`${siteConfig.name} — Profil`}
+      title={`${siteConfig.name} — ${labels.title}`}
       author={siteConfig.name}
-      subject={siteConfig.tagline}
+      subject={tagline}
       creator={siteConfig.brand}
     >
       <Page size="A4" style={s.page}>
         {/* Kopfzeile */}
         <View style={s.topBar}>
-          <Text style={s.topBarText}>{siteConfig.brand} — Profil</Text>
+          <Text style={s.topBarText}>
+            {siteConfig.brand} — {labels.title}
+          </Text>
           <Text style={s.topBarText}>mxdigital.de</Text>
         </View>
 
@@ -259,8 +274,8 @@ export function ProfilPdf({ stand }: { stand: string }) {
         <View style={s.header}>
           <View style={{ flex: 1 }}>
             <Text style={s.name}>{siteConfig.name}</Text>
-            <Text style={s.tagline}>{siteConfig.tagline}</Text>
-            <Text style={s.intro}>{siteConfig.description}</Text>
+            <Text style={s.tagline}>{tagline}</Text>
+            <Text style={s.intro}>{description}</Text>
             <View style={s.contactRow}>
               <Text style={s.contactItem}>{siteConfig.email}</Text>
               <Text style={s.contactItem}>mxdigital.de</Text>
@@ -279,7 +294,7 @@ export function ProfilPdf({ stand }: { stand: string }) {
           {/* Hauptspalte */}
           <View style={s.main}>
             <View>
-              <Text style={s.heading}>Schwerpunkte</Text>
+              <Text style={s.heading}>{labels.schwerpunkte}</Text>
               <View style={{ marginTop: 9, gap: 10.5 }}>
                 {services.map((service) => (
                   <View key={service.title} style={s.serviceRow}>
@@ -294,7 +309,7 @@ export function ProfilPdf({ stand }: { stand: string }) {
             </View>
 
             <View style={{ marginTop: 18 }}>
-              <Text style={s.heading}>Projekthistorie</Text>
+              <Text style={s.heading}>{labels.projekthistorie}</Text>
               <View style={{ marginTop: 9, gap: 12 }}>
                 {projekte.map((p) => (
                   <View key={p.period + p.title}>
@@ -315,17 +330,17 @@ export function ProfilPdf({ stand }: { stand: string }) {
           {/* Seitenspalte */}
           <View style={s.side}>
             <View>
-              <Text style={s.heading}>Werdegang</Text>
+              <Text style={s.heading}>{labels.werdegang}</Text>
               <SideTimeline items={werdegang} />
             </View>
 
             <View style={{ marginTop: 18 }}>
-              <Text style={s.heading}>Ausbildung</Text>
+              <Text style={s.heading}>{labels.ausbildung}</Text>
               <SideTimeline items={ausbildung} />
             </View>
 
             <View style={{ marginTop: 18 }}>
-              <Text style={s.heading}>Tech-Stack</Text>
+              <Text style={s.heading}>{labels.techStack}</Text>
               <View style={[s.chipRow, { marginTop: 9, gap: 4 }]}>
                 {techStack.map((tech) => (
                   <View key={tech} style={s.chip}>
@@ -342,7 +357,7 @@ export function ProfilPdf({ stand }: { stand: string }) {
           <Text style={s.footerText}>
             {siteConfig.name} · {siteConfig.brand} · mxdigital.de
           </Text>
-          <Text style={s.footerText}>Stand: {stand}</Text>
+          <Text style={s.footerText}>{labels.stand}</Text>
         </View>
       </Page>
     </Document>

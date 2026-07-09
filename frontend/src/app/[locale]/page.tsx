@@ -1,9 +1,13 @@
+import type { Metadata } from "next"
 import Image from "next/image"
-import Link from "next/link"
 import { ArrowRight } from "lucide-react"
+import { getTranslations, setRequestLocale } from "next-intl/server"
 
-import { siteConfig } from "@/lib/site"
-import { services } from "@/lib/profile"
+import { Link } from "@/i18n/navigation"
+import { localeAlternates } from "@/i18n/alternates"
+import type { Locale } from "@/i18n/routing"
+import { siteConfig, siteText } from "@/lib/site"
+import { profileContent } from "@/lib/profile"
 import { cn } from "@/lib/utils"
 import { GitHubIcon } from "@/components/icons"
 import { Button } from "@/components/ui/button"
@@ -24,7 +28,24 @@ const stack = [
   "Docker",
 ]
 
-export default function Home() {
+type Props = {
+  params: Promise<{ locale: Locale }>
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params
+  return { alternates: localeAlternates(locale, "/") }
+}
+
+export default async function Home({ params }: Props) {
+  const { locale } = await params
+  setRequestLocale(locale)
+
+  const t = await getTranslations("home")
+  const tSections = await getTranslations("sections")
+  const { services } = profileContent[locale]
+  const { tagline, description } = siteText[locale]
+
   return (
     <>
       {/* Hero */}
@@ -38,7 +59,7 @@ export default function Home() {
         <div className="mx-auto flex max-w-5xl flex-col-reverse items-start gap-10 px-4 py-24 sm:px-6 sm:py-32 lg:flex-row lg:items-center lg:justify-between">
           <div>
             <BlurFade delay={0.1}>
-              <Link
+              <a
                 href={siteConfig.social.github}
                 target="_blank"
                 rel="noreferrer"
@@ -49,20 +70,20 @@ export default function Home() {
                   <span>github.com/mars-mx</span>
                   <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" />
                 </AnimatedShinyText>
-              </Link>
+              </a>
             </BlurFade>
 
             <BlurFade delay={0.2}>
               <h1 className="max-w-3xl text-balance text-4xl font-semibold tracking-tight sm:text-5xl">
-                Hi, ich bin {siteConfig.name}.
+                {t("greeting", { name: siteConfig.name })}
                 <br />
-                <span className="text-muted-foreground">{siteConfig.tagline}.</span>
+                <span className="text-muted-foreground">{tagline}.</span>
               </h1>
             </BlurFade>
 
             <BlurFade delay={0.3}>
               <p className="mt-6 max-w-2xl text-pretty text-lg text-muted-foreground">
-                {siteConfig.description}
+                {description}
               </p>
             </BlurFade>
 
@@ -70,7 +91,7 @@ export default function Home() {
               <div className="mt-8 flex flex-wrap gap-3">
                 <Button size="lg" asChild>
                   <Link href="/kontakt">
-                    Kontakt aufnehmen
+                    {t("ctaKontakt")}
                     <ArrowRight className="size-4" />
                   </Link>
                 </Button>
@@ -103,7 +124,7 @@ export default function Home() {
       <section className="mx-auto max-w-5xl px-4 py-16 sm:px-6">
         <BlurFade inView>
           <h2 className="font-mono text-sm uppercase tracking-widest text-muted-foreground">
-            Schwerpunkte
+            {tSections("schwerpunkte")}
           </h2>
         </BlurFade>
         <div className="mt-6 divide-y divide-border/60 border-y border-border/60">
@@ -141,7 +162,7 @@ export default function Home() {
       <section className="mx-auto max-w-5xl px-4 py-16 sm:px-6">
         <BlurFade inView>
           <h2 className="font-mono text-sm uppercase tracking-widest text-muted-foreground">
-            Tech-Stack
+            {tSections("techStack")}
           </h2>
         </BlurFade>
         <div className="mt-6 flex flex-wrap gap-2">

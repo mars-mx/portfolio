@@ -1,24 +1,27 @@
 import type { Metadata } from "next"
 import Image from "next/image"
-import Link from "next/link"
 import { ArrowLeft, FileDown } from "lucide-react"
+import { getTranslations, setRequestLocale } from "next-intl/server"
 
-import { siteConfig } from "@/lib/site"
-import {
-  ausbildung,
-  projekte,
-  services,
-  techStack,
-  werdegang,
-  type TimelineItem,
-} from "@/lib/profile"
+import { Link } from "@/i18n/navigation"
+import type { Locale } from "@/i18n/routing"
+import { siteConfig, siteText } from "@/lib/site"
+import { profileContent, techStack, type TimelineItem } from "@/lib/profile"
 import { Button } from "@/components/ui/button"
 
-export const metadata: Metadata = {
-  title: "Profil",
-  description:
-    "Profil von Marius Schäffer als PDF: Schwerpunkte, Projekthistorie, Werdegang und Tech-Stack auf einer Seite.",
-  robots: { index: false },
+type Props = {
+  params: Promise<{ locale: Locale }>
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: "profil" })
+
+  return {
+    title: t("title"),
+    description: t("metaDescription"),
+    robots: { index: false },
+  }
 }
 
 function SheetHeading({ children }: { children: React.ReactNode }) {
@@ -63,11 +66,23 @@ function ReaderTimeline({ items }: { items: TimelineItem[] }) {
   )
 }
 
-export default function ProfilPage() {
-  const stand = new Intl.DateTimeFormat("de-DE", {
+export default async function ProfilPage({ params }: Props) {
+  const { locale } = await params
+  setRequestLocale(locale)
+
+  const t = await getTranslations("profil")
+  const tSections = await getTranslations("sections")
+  const { services, werdegang, ausbildung, projekte } = profileContent[locale]
+  const { tagline, description } = siteText[locale]
+
+  const stand = new Intl.DateTimeFormat(locale === "de" ? "de-DE" : "en-US", {
     month: "long",
     year: "numeric",
   }).format(new Date())
+  const standLine = t("stand", { date: stand })
+
+  const pdfHref =
+    locale === "de" ? "/profil.pdf" : `/profil.pdf?locale=${locale}`
 
   return (
     <>
@@ -90,12 +105,12 @@ export default function ProfilPage() {
             className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
           >
             <ArrowLeft className="size-4" />
-            Zurück
+            {t("back")}
           </Link>
           <Button size="sm" asChild>
-            <a href="/profil.pdf" download>
+            <a href={pdfHref} download>
               <FileDown className="size-4" />
-              PDF herunterladen
+              {t("download")}
             </a>
           </Button>
         </div>
@@ -107,7 +122,7 @@ export default function ProfilPage() {
               <h1 className="text-2xl font-semibold tracking-tight">
                 {siteConfig.name}
               </h1>
-              <p className="mt-1 text-muted-foreground">{siteConfig.tagline}</p>
+              <p className="mt-1 text-muted-foreground">{tagline}</p>
             </div>
             <div className="relative size-16 shrink-0 overflow-hidden rounded-full border">
               <Image
@@ -121,7 +136,7 @@ export default function ProfilPage() {
             </div>
           </header>
           <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-            {siteConfig.description}
+            {description}
           </p>
           <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 font-mono text-xs text-muted-foreground">
             <span>{siteConfig.email}</span>
@@ -131,7 +146,7 @@ export default function ProfilPage() {
           </div>
 
           <section className="mt-10 border-t pt-8">
-            <ReaderHeading>Schwerpunkte</ReaderHeading>
+            <ReaderHeading>{tSections("schwerpunkte")}</ReaderHeading>
             <ul className="mt-5 space-y-5">
               {services.map((s) => (
                 <li key={s.title} className="grid grid-cols-[24px_1fr] gap-x-3">
@@ -150,7 +165,7 @@ export default function ProfilPage() {
           </section>
 
           <section className="mt-10">
-            <ReaderHeading>Projekthistorie</ReaderHeading>
+            <ReaderHeading>{tSections("projekthistorie")}</ReaderHeading>
             <ul className="mt-5 space-y-6">
               {projekte.map((p) => (
                 <li key={p.period + p.title}>
@@ -170,17 +185,17 @@ export default function ProfilPage() {
           </section>
 
           <section className="mt-10">
-            <ReaderHeading>Werdegang</ReaderHeading>
+            <ReaderHeading>{tSections("werdegang")}</ReaderHeading>
             <ReaderTimeline items={werdegang} />
           </section>
 
           <section className="mt-10">
-            <ReaderHeading>Ausbildung</ReaderHeading>
+            <ReaderHeading>{tSections("ausbildung")}</ReaderHeading>
             <ReaderTimeline items={ausbildung} />
           </section>
 
           <section className="mt-10">
-            <ReaderHeading>Tech-Stack</ReaderHeading>
+            <ReaderHeading>{tSections("techStack")}</ReaderHeading>
             <ul className="mt-5 flex flex-wrap gap-2">
               {techStack.map((tech) => (
                 <li
@@ -194,7 +209,7 @@ export default function ProfilPage() {
           </section>
 
           <p className="mt-10 border-t pt-4 font-mono text-xs text-muted-foreground/70">
-            Stand: {stand}
+            {standLine}
           </p>
         </div>
 
@@ -206,7 +221,9 @@ export default function ProfilPage() {
           >
             {/* Kopfzeile */}
             <div className="flex items-baseline justify-between border-b border-zinc-200 pb-2.5 font-mono text-[8px] uppercase tracking-[0.25em] text-zinc-400">
-              <span>{siteConfig.brand} — Profil</span>
+              <span>
+                {siteConfig.brand} — {t("title")}
+              </span>
               <span>mxdigital.de</span>
             </div>
 
@@ -216,11 +233,9 @@ export default function ProfilPage() {
                 <h1 className="text-[27px] font-semibold leading-tight tracking-tight">
                   {siteConfig.name}
                 </h1>
-                <p className="mt-1 text-[13px] text-zinc-500">
-                  {siteConfig.tagline}
-                </p>
+                <p className="mt-1 text-[13px] text-zinc-500">{tagline}</p>
                 <p className="mt-3.5 max-w-[112mm] text-[10px] leading-relaxed text-zinc-600">
-                  {siteConfig.description}
+                  {description}
                 </p>
                 <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 font-mono text-[8.5px] text-zinc-500">
                   <span>{siteConfig.email}</span>
@@ -246,7 +261,7 @@ export default function ProfilPage() {
               {/* Hauptspalte */}
               <div className="min-w-0 space-y-6">
                 <section>
-                  <SheetHeading>Schwerpunkte</SheetHeading>
+                  <SheetHeading>{tSections("schwerpunkte")}</SheetHeading>
                   <ul className="mt-3 space-y-3.5">
                     {services.map((s) => (
                       <li key={s.title} className="grid grid-cols-[16px_1fr] gap-x-2">
@@ -267,7 +282,7 @@ export default function ProfilPage() {
                 </section>
 
                 <section>
-                  <SheetHeading>Projekthistorie</SheetHeading>
+                  <SheetHeading>{tSections("projekthistorie")}</SheetHeading>
                   <ul className="mt-3 space-y-4">
                     {projekte.map((p) => (
                       <li key={p.period + p.title}>
@@ -292,7 +307,7 @@ export default function ProfilPage() {
               {/* Seitenspalte */}
               <div className="min-w-0 space-y-6 border-l border-zinc-200 pl-6">
                 <section>
-                  <SheetHeading>Werdegang</SheetHeading>
+                  <SheetHeading>{tSections("werdegang")}</SheetHeading>
                   <ul className="mt-3 space-y-3">
                     {werdegang.map((item) => (
                       <li key={item.period + item.title}>
@@ -311,7 +326,7 @@ export default function ProfilPage() {
                 </section>
 
                 <section>
-                  <SheetHeading>Ausbildung</SheetHeading>
+                  <SheetHeading>{tSections("ausbildung")}</SheetHeading>
                   <ul className="mt-3 space-y-3">
                     {ausbildung.map((item) => (
                       <li key={item.period + item.title}>
@@ -330,7 +345,7 @@ export default function ProfilPage() {
                 </section>
 
                 <section>
-                  <SheetHeading>Tech-Stack</SheetHeading>
+                  <SheetHeading>{tSections("techStack")}</SheetHeading>
                   <div className="mt-3 flex flex-wrap gap-1.5">
                     {techStack.map((tech) => (
                       <Chip key={tech}>{tech}</Chip>
@@ -345,7 +360,7 @@ export default function ProfilPage() {
               <span>
                 {siteConfig.name} · {siteConfig.brand} · mxdigital.de
               </span>
-              <span>Stand: {stand}</span>
+              <span>{standLine}</span>
             </div>
           </div>
         </div>

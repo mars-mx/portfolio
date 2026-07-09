@@ -1,9 +1,12 @@
-import Link from "next/link"
+import { useTranslations } from "next-intl"
 
+import { Link } from "@/i18n/navigation"
 import { siteConfig } from "@/lib/site"
 import { GitHubIcon, LinkedInIcon } from "@/components/icons"
 
 export function SiteFooter() {
+  const t = useTranslations("footer")
+
   return (
     <footer className="border-t border-border/60 print:hidden">
       <div className="mx-auto flex max-w-5xl flex-col gap-4 px-4 py-8 text-sm sm:flex-row sm:items-center sm:justify-between sm:px-6">
@@ -16,10 +19,10 @@ export function SiteFooter() {
 
         <nav className="flex flex-wrap items-center gap-x-4 gap-y-2 text-muted-foreground">
           <Link href="/impressum" className="hover:text-foreground">
-            Impressum
+            {t("impressum")}
           </Link>
           <Link href="/datenschutz" className="hover:text-foreground">
-            Datenschutz
+            {t("datenschutz")}
           </Link>
           <a
             href={siteConfig.social.github}

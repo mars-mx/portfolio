@@ -1,8 +1,23 @@
 import type { Metadata } from "next"
+import { getTranslations, setRequestLocale } from "next-intl/server"
 
+import { localeAlternates } from "@/i18n/alternates"
+import type { Locale } from "@/i18n/routing"
 import { PageShell } from "@/components/page-shell"
 
-export const metadata: Metadata = { title: "Datenschutz" }
+type Props = {
+  params: Promise<{ locale: Locale }>
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: "datenschutz" })
+
+  return {
+    title: t("metaTitle"),
+    alternates: localeAlternates(locale, "/datenschutz"),
+  }
+}
 
 function H2({ children }: { children: React.ReactNode }) {
   return (
@@ -16,9 +31,17 @@ function H3({ children }: { children: React.ReactNode }) {
   return <h3 className="pt-2 font-medium text-foreground">{children}</h3>
 }
 
-export default function DatenschutzPage() {
+export default async function DatenschutzPage({ params }: Props) {
+  const { locale } = await params
+  setRequestLocale(locale)
+
+  const t = await getTranslations("datenschutz")
+  const tLegal = await getTranslations("legal")
+
   return (
-    <PageShell title="Datenschutzerklärung">
+    <PageShell title={t("title")}>
+      {/* Rechtstext bleibt deutsch — auf EN nur ein Hinweis. */}
+      {locale === "en" ? <p className="text-sm italic">{tLegal("germanOnly")}</p> : null}
       <H2>1) Einleitung und Kontaktdaten des Verantwortlichen</H2>
       <p>
         1.1 Wir freuen uns, dass du unsere Website besuchst und bedanken uns für

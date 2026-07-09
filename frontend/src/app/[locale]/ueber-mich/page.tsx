@@ -1,27 +1,39 @@
 import type { Metadata } from "next"
 import Image from "next/image"
-import Link from "next/link"
 import { FileDown } from "lucide-react"
+import { getTranslations, setRequestLocale } from "next-intl/server"
 
-import {
-  ausbildung,
-  projekte,
-  techStack,
-  werdegang,
-  type TimelineItem,
-} from "@/lib/profile"
+import { Link } from "@/i18n/navigation"
+import { localeAlternates } from "@/i18n/alternates"
+import type { Locale } from "@/i18n/routing"
+import { profileContent, techStack, type TimelineItem } from "@/lib/profile"
 import { PageShell } from "@/components/page-shell"
 import { Button } from "@/components/ui/button"
 import { BlurFade } from "@/components/ui/blur-fade"
 import { GlassHoverCard } from "@/components/glass-hover-card"
 
-export const metadata: Metadata = {
-  title: "Profil",
-  description:
-    "Marius Schäffer, Softwareentwickler mit Fokus auf KI. Werdegang, Ausbildung und Tech-Stack.",
+type Props = {
+  params: Promise<{ locale: Locale }>
 }
 
-function Timeline({ items }: { items: TimelineItem[] }) {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: "about" })
+
+  return {
+    title: t("title"),
+    description: t("metaDescription"),
+    alternates: localeAlternates(locale, "/ueber-mich"),
+  }
+}
+
+function Timeline({
+  items,
+  detailsLabel,
+}: {
+  items: TimelineItem[]
+  detailsLabel: string
+}) {
   return (
     <ul className="space-y-5">
       {items.map((item) => (
@@ -42,7 +54,7 @@ function Timeline({ items }: { items: TimelineItem[] }) {
             {item.note && item.details ? (
               <GlassHoverCard trigger={item.note}>
                 <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground/80">
-                  Inhalte
+                  {detailsLabel}
                 </p>
                 <p className="mt-1.5 leading-relaxed text-foreground/90">
                   {item.details}
@@ -77,10 +89,17 @@ function Section({
   )
 }
 
-export default function UeberMichPage() {
+export default async function UeberMichPage({ params }: Props) {
+  const { locale } = await params
+  setRequestLocale(locale)
+
+  const t = await getTranslations("about")
+  const tSections = await getTranslations("sections")
+  const { werdegang, ausbildung, projekte } = profileContent[locale]
+
   return (
     <PageShell
-      title="Profil"
+      title={t("title")}
       actions={
         <Button variant="outline" size="sm" asChild>
           <Link href="/profil">
@@ -104,31 +123,18 @@ export default function UeberMichPage() {
           </div>
 
           <div className="space-y-4">
-            <p>
-              Ich bin Marius Schäffer, Softwareentwickler mit Fokus auf
-              Künstliche Intelligenz. Aus Begeisterung beschäftige ich mich seit
-              meiner Kindheit mit allen Themen rund um den Computer.
-            </p>
-            <p>
-              Mein Schwerpunkt sind LLM-Agentensysteme für den Enterprise-Einsatz:
-              Tool-Anbindung &amp; RAG, Context Engineering und die Automatisierung
-              ganzer Geschäftsprozesse, von der Architektur bis zum produktiven
-              Betrieb.
-            </p>
-            <p>
-              Neben der Technik beschäftige ich mich mit Individualpsychologie und
-              Coaching. Am Ende des Tages ist Software ein Tool, das Menschen
-              hilft, ihre Aufgaben &amp; Ziele zu erreichen.
-            </p>
+            <p>{t("intro1")}</p>
+            <p>{t("intro2")}</p>
+            <p>{t("intro3")}</p>
           </div>
         </div>
       </BlurFade>
 
-      <Section title="Werdegang">
-        <Timeline items={werdegang} />
+      <Section title={tSections("werdegang")}>
+        <Timeline items={werdegang} detailsLabel={t("inhalte")} />
       </Section>
 
-      <Section title="Projekthistorie">
+      <Section title={tSections("projekthistorie")}>
         <ul className="space-y-5">
           {projekte.map((p) => (
             <li
@@ -160,11 +166,11 @@ export default function UeberMichPage() {
         </ul>
       </Section>
 
-      <Section title="Ausbildung">
-        <Timeline items={ausbildung} />
+      <Section title={tSections("ausbildung")}>
+        <Timeline items={ausbildung} detailsLabel={t("inhalte")} />
       </Section>
 
-      <Section title="Tech-Stack">
+      <Section title={tSections("techStack")}>
         <ul className="flex flex-wrap gap-2">
           {techStack.map((tech) => (
             <li
