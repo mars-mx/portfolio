@@ -78,14 +78,18 @@ class KnowledgeBase:
         ]
 
 
+# Doku über den Ordner, kein Wissens-Content — darf nicht im Index landen.
+IGNORED_FILES = {"README.md", "CLAUDE.md"}
+
+
 def _read_files() -> list[tuple[str, str]]:
-    """Liest alle Wissensdateien als sortierte (Dateiname, Rohtext)-Paare, ohne README.md."""
+    """Liest alle Wissensdateien als sortierte (Dateiname, Rohtext)-Paare, ohne IGNORED_FILES."""
     if not KNOWLEDGE_DIR.is_dir():
         return []
     return sorted(
         (path.name, path.read_text(encoding="utf-8"))
         for path in KNOWLEDGE_DIR.glob("*.md")
-        if path.name != "README.md"
+        if path.name not in IGNORED_FILES
     )
 
 
