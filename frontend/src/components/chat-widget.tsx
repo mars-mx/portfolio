@@ -84,7 +84,7 @@ export function ChatWidget() {
           setMounted(true)
         }}
         className={cn(
-          "fade-in zoom-in-75 animate-in fixed right-4 bottom-4 z-50 size-12 rounded-full shadow-lg duration-200 print:hidden",
+          "animate-breathe motion-reduce:animate-none fixed right-4 bottom-4 z-50 size-12 rounded-full shadow-lg print:hidden",
           open && "hidden",
         )}
       >

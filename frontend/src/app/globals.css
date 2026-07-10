@@ -102,6 +102,16 @@
     background-position: calc(100% + var(--shiny-width)) 0;
     }
   }
+  --animate-breathe: breathe 3.5s ease-in-out infinite;
+  @keyframes breathe {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.08);
+    }
+  }
 }
 
 /* Hero-Intro: reine CSS-Animation statt hydration-gesteuertem motion/react.
