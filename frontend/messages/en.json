@@ -56,6 +56,7 @@
     "editCancel": "Cancel",
     "editUpdate": "Update",
     "scrollToBottom": "Scroll to bottom",
+    "toolCalls": "{count, plural, one {Function Call} other {Function Calls}}",
     "searchRunning": "Searching knowledge base …",
     "searchTitle": "Knowledge base searched",
     "searchQuery": "Search query",

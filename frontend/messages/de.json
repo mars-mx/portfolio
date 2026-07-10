@@ -56,6 +56,7 @@
     "editCancel": "Abbrechen",
     "editUpdate": "Aktualisieren",
     "scrollToBottom": "Nach unten scrollen",
+    "toolCalls": "{count, plural, one {Funktionsaufruf} other {Funktionsaufrufe}}",
     "searchRunning": "Durchsuche Wissensbasis …",
     "searchTitle": "Wissensbasis durchsucht",
     "searchQuery": "Suchanfrage",
