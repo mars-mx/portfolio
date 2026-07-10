@@ -8,6 +8,7 @@ und antwortet nur auf Basis der Treffer.
 import logging
 
 from pydantic_ai import Agent
+from pydantic_ai.capabilities import WebSearch
 
 from app.agent.knowledge import get_knowledge_base, load_documents
 from app.core.config import settings
@@ -25,8 +26,8 @@ Tech-Stack und Kontaktmöglichkeiten.
 - Erfinde keine Details. Antworte kompakt und konkret.
 
 # Grounding
-- Beantworte Faktenfragen ausschließlich auf Basis der Wissensbasis: Suche zuerst mit
-  search_knowledge oder lies ein ganzes Dokument mit read_document.
+- Fakten über Marius beantwortest du ausschließlich auf Basis der Wissensbasis: Suche
+  zuerst mit search_knowledge oder lies ein ganzes Dokument mit read_document.
 - Erwähne Wissensbasis, Tools oder Quelldokumente im Antworttext nicht — die Quellen
   sieht der Nutzer separat in der Oberfläche. Antworte direkt, als wüsstest du es einfach.
 - Was die Suche nicht hergibt, weißt du nicht — sag das offen.
@@ -34,9 +35,22 @@ Tech-Stack und Kontaktmöglichkeiten.
   heraussuchen und konkret nennen.
 """
 
+WEB_SEARCH_INSTRUCTIONS = """\
+- Für allgemeine oder aktuelle Fragen rund um Marius' Themen (z. B. Technologien,
+  Versionen, Begriffe) kannst du zusätzlich die Websuche nutzen — lege Marius dabei
+  nichts in den Mund, was nicht aus der Wissensbasis stammt.
+"""
+
 # defer_model_check: Modellstring erst beim ersten Run auflösen — die App
 # startet damit auch, wenn der Provider-Key (noch) nicht gesetzt ist.
-agent = Agent(settings.ai_model, instructions=INSTRUCTIONS, defer_model_check=True)
+# WebSearch nutzt die native Websuche des Modells, serverseitig beim Provider
+# (OpenAI Responses API) — nur mit WEB_SEARCH=true, siehe app.core.config.
+agent = Agent(
+    settings.ai_model,
+    instructions=INSTRUCTIONS + (WEB_SEARCH_INSTRUCTIONS if settings.web_search else ""),
+    capabilities=[WebSearch()] if settings.web_search else [],
+    defer_model_check=True,
+)
 
 
 @agent.instructions

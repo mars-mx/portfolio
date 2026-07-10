@@ -19,6 +19,11 @@ class Settings(BaseSettings):
     # OpenAI-Embedding-Modell für die Wissensbasis-Suche.
     embedding_model: str = "text-embedding-3-small"
 
+    # Native Websuche des Modells als Agent-Capability. Braucht bei OpenAI
+    # freigeschaltete Hosted Tools (Org-Einstellung), sonst schlägt jede
+    # Chat-Anfrage mit 400 fehl — deshalb Opt-in.
+    web_search: bool = False
+
     @property
     def cors_origins_list(self) -> list[str]:
         return [o.strip() for o in self.cors_origins.split(",") if o.strip()]
