@@ -17,7 +17,7 @@ make backend    # backend only (uvicorn --reload)
 make frontend   # frontend only
 make build      # frontend production build
 make knowledge  # regenerate backend/knowledge/website-*.md from frontend/src/lib
-make index      # build/refresh the embedding index (backend/.cache/, also for Docker builds)
+make index      # build/refresh the embedding index (backend/.cache/; im Container baut ihn der Start selbst, siehe Issue #2)
 make stop       # kill processes on both ports
 ```
 

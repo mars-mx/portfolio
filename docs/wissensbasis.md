@@ -37,9 +37,10 @@ Dateiinhalte, Embedding-Modell und Chunker-Version.
 
 **Lifecycle**: Beim App-Start wird der Hash geprüft — unverändert heißt Cache
 laden ohne API-Call, geändert heißt einmalig neu embedden (1–2 s,
-Centbruchteile). Es gibt keinen Seed-Schritt, den man vergessen könnte. Für
-deterministische Container-Starts baut `make index` den Cache im Docker-Build
-vor. Im Dev-Modus lädt uvicorn dank `--reload-include '*.md'` auch bei
+Centbruchteile). Es gibt keinen Seed-Schritt, den man vergessen könnte. Im
+Container gibt es noch keinen vorgebauten Cache — jeder Start embeddet einmal
+neu ([#2](https://github.com/mars-mx/portfolio/issues/2) trackt das Vorbauen
+im CI-Build). Im Dev-Modus lädt uvicorn dank `--reload-include '*.md'` auch bei
 Content-Änderungen neu.
 
 **Retrieval**: Der Agent (Pydantic AI) bekommt per Instructions den

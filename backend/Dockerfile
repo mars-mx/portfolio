@@ -26,6 +26,10 @@ RUN addgroup --system --gid 1001 apigroup \
 
 COPY --from=builder /app/.venv ./.venv
 COPY app ./app
+COPY knowledge ./knowledge
+# No prebuilt index in the image (yet): the container embeds the knowledge
+# base on first start and caches it here (app/agent/knowledge.py).
+RUN mkdir .cache && chown api:apigroup .cache
 ENV PATH="/app/.venv/bin:$PATH"
 
 USER api
