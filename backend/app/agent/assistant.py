@@ -99,7 +99,9 @@ def offer_profile_download(button_label: str) -> str:
     # den Run ab ("Exceeded maximum output retries").
     return (
         "Der Download-Button wird dem Nutzer angezeigt. "
-        "Antworte jetzt mit einem kurzen Satz — ohne Link, der Button ist schon da."
+        "Antworte jetzt mit einem kurzen Satz in der Sprache des Nutzers, sinngemäß: "
+        '"Klicke auf die Schaltfläche, um das aktuelle Profil direkt herunterzuladen." '
+        "Ohne Link, der Button ist schon da."
     )
 
 
