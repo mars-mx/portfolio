@@ -3,7 +3,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server"
 
 import { localeAlternates } from "@/i18n/alternates"
 import type { Locale } from "@/i18n/routing"
-import { Assistant } from "@/components/assistant"
+import { AssistantClient } from "@/components/assistant-client"
 
 type Props = {
   params: Promise<{ locale: Locale }>
@@ -36,7 +36,7 @@ export default async function ChatPage({ params }: Props) {
       data-chat-page
       className="flex min-h-0 w-full flex-1 flex-col overflow-hidden"
     >
-      <Assistant />
+      <AssistantClient />
     </div>
   )
 }

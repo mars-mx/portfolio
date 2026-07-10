@@ -1,26 +1,13 @@
 "use client"
 
 import { useState } from "react"
-import dynamic from "next/dynamic"
 import { MessageCircleIcon, Maximize2Icon, XIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 
 import { Link, usePathname } from "@/i18n/navigation"
+import { AssistantClient } from "@/components/assistant-client"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
-
-// Erst beim ersten Öffnen laden — assistant-ui hängt sonst im Bundle jeder Seite.
-const Assistant = dynamic(
-  () => import("@/components/assistant").then((m) => m.Assistant),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="flex h-full items-center justify-center">
-        <span className="text-muted-foreground animate-pulse">●</span>
-      </div>
-    ),
-  },
-)
 
 export function ChatWidget() {
   const t = useTranslations("chat")
@@ -71,7 +58,7 @@ export function ChatWidget() {
             </div>
           </div>
           <div className="flex min-h-0 flex-1 flex-col">
-            <Assistant variant="widget" />
+            <AssistantClient variant="widget" />
           </div>
         </div>
       )}
