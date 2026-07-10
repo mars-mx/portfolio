@@ -15,6 +15,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: t("metaTitle"),
+    description: t("metaDescription"),
     alternates: localeAlternates(locale, "/datenschutz"),
   }
 }

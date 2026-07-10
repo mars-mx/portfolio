@@ -73,7 +73,7 @@ export default async function Home({ params }: Props) {
               </a>
             </div>
 
-            <div className="motion-safe:animate-[hero-enter_0.4s_ease-out_0.2s_backwards]">
+            <div className="motion-safe:animate-[hero-enter-visible_0.4s_ease-out_0.2s_backwards]">
               <h1 className="max-w-3xl text-balance text-4xl font-semibold tracking-tight sm:text-5xl">
                 {t("greeting", { name: siteConfig.name })}
                 <br />
@@ -81,7 +81,7 @@ export default async function Home({ params }: Props) {
               </h1>
             </div>
 
-            <div className="motion-safe:animate-[hero-enter_0.4s_ease-out_0.3s_backwards]">
+            <div className="motion-safe:animate-[hero-enter-visible_0.4s_ease-out_0.3s_backwards]">
               <p className="mt-6 max-w-2xl text-pretty text-lg text-muted-foreground">
                 {description}
               </p>

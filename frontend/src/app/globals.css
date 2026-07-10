@@ -117,12 +117,24 @@
 /* Hero-Intro: reine CSS-Animation statt hydration-gesteuertem motion/react.
    Läuft ab dem ersten Paint — der LCP hängt so nicht am JS-Download, und
    sichtbarer Inhalt springt nicht nachträglich (Nutzung via
-   animate-[hero-enter_…] mit animation-delay im Shorthand). */
+   animate-[hero-enter…_…] mit animation-delay im Shorthand).
+   Zwei Varianten: hero-enter (opacity + blur + translate) nur für sekundäre
+   Hero-Elemente (Badge, Avatar, Buttons); die LCP-Elemente (H1 +
+   Beschreibung) bekommen hero-enter-visible, das ausschließlich transform
+   animiert — Chrome zählt opacity:0-Elemente nicht als gepainted, mit dem
+   `backwards`-Fill würde der LCP sonst erst nach Delay + Animationsdauer
+   feuern statt beim ersten Paint. */
 @keyframes hero-enter {
   from {
     opacity: 0;
     transform: translateY(-6px);
     filter: blur(6px);
+  }
+}
+
+@keyframes hero-enter-visible {
+  from {
+    transform: translateY(-6px);
   }
 }
 

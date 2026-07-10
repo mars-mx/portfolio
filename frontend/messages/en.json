@@ -29,6 +29,7 @@
   },
   "about": {
     "title": "Profile",
+    "metaTitle": "About me",
     "metaDescription": "Marius Schäffer, software engineer focused on AI. Experience, education and tech stack.",
     "intro1": "I'm Marius Schäffer, a software engineer focused on artificial intelligence. Computers and everything around them have fascinated me since childhood.",
     "intro2": "My focus is LLM agent systems for enterprise use: tool integration & RAG, context engineering and the automation of entire business processes, from architecture to production operations.",
@@ -79,10 +80,12 @@
     "emailCopied": "Email address copied"
   },
   "impressum": {
-    "title": "Legal Notice"
+    "title": "Legal Notice",
+    "metaDescription": "Legal notice of Marius Schäffer (MX Digital): provider identification, contact details and VAT ID."
   },
   "datenschutz": {
     "metaTitle": "Privacy Policy",
+    "metaDescription": "Privacy policy of Marius Schäffer (MX Digital): how personal data is processed on this website.",
     "title": "Privacy Policy"
   },
   "legal": {

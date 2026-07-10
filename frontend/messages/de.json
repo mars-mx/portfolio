@@ -29,6 +29,7 @@
   },
   "about": {
     "title": "Profil",
+    "metaTitle": "Über mich",
     "metaDescription": "Marius Schäffer, Softwareentwickler mit Fokus auf KI. Werdegang, Ausbildung und Tech-Stack.",
     "intro1": "Ich bin Marius Schäffer, Softwareentwickler mit Fokus auf Künstliche Intelligenz. Aus Begeisterung beschäftige ich mich seit meiner Kindheit mit allen Themen rund um den Computer.",
     "intro2": "Mein Schwerpunkt sind LLM-Agentensysteme für den Enterprise-Einsatz: Tool-Anbindung & RAG, Context Engineering und die Automatisierung ganzer Geschäftsprozesse, von der Architektur bis zum produktiven Betrieb.",
@@ -79,10 +80,12 @@
     "emailCopied": "E-Mail-Adresse kopiert"
   },
   "impressum": {
-    "title": "Impressum"
+    "title": "Impressum",
+    "metaDescription": "Impressum von Marius Schäffer (MX Digital): Anbieterkennzeichnung, Kontakt und Umsatzsteuer-ID."
   },
   "datenschutz": {
     "metaTitle": "Datenschutz",
+    "metaDescription": "Datenschutzerklärung von Marius Schäffer (MX Digital): Informationen zur Verarbeitung personenbezogener Daten auf dieser Website.",
     "title": "Datenschutzerklärung"
   },
   "legal": {

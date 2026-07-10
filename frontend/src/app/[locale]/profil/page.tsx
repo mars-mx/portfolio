@@ -5,6 +5,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server"
 
 import { Link } from "@/i18n/navigation"
 import type { Locale } from "@/i18n/routing"
+import { jsonLdScript, profilePageJsonLd } from "@/lib/jsonld"
 import { profilPdfHref, siteConfig, siteText } from "@/lib/site"
 import { profileContent, techStack, type TimelineItem } from "@/lib/profile"
 import { Button } from "@/components/ui/button"
@@ -71,6 +72,7 @@ export default async function ProfilPage({ params }: Props) {
   setRequestLocale(locale)
 
   const t = await getTranslations("profil")
+  const tNav = await getTranslations("nav")
   const tSections = await getTranslations("sections")
   const { services, werdegang, ausbildung, projekte } = profileContent[locale]
   const { tagline, description } = siteText[locale]
@@ -85,6 +87,20 @@ export default async function ProfilPage({ params }: Props) {
 
   return (
     <>
+      {/* ProfilePage + BreadcrumbList — statische Werte, keine Nutzereingaben. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonLdScript(
+            profilePageJsonLd({
+              locale,
+              href: "/profil",
+              pageName: t("title"),
+              homeLabel: tNav("home"),
+            })
+          ),
+        }}
+      />
       <style>{`
         @page { size: A4; margin: 0; }
         #profil-sheet {
