@@ -7,6 +7,7 @@ import {
 } from "@assistant-ui/react-ai-sdk"
 
 import { KnowledgeSearchToolUI } from "@/components/assistant-ui/knowledge-search-tool"
+import { ProfileDownloadToolUI } from "@/components/assistant-ui/profile-download-tool"
 import { Thread } from "@/components/assistant-ui/thread"
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8210"
@@ -25,6 +26,7 @@ export function Assistant({
   return (
     <AssistantRuntimeProvider runtime={runtime}>
       <KnowledgeSearchToolUI />
+      <ProfileDownloadToolUI />
       <Thread variant={variant} />
     </AssistantRuntimeProvider>
   )

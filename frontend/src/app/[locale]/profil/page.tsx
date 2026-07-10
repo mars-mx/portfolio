@@ -5,7 +5,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server"
 
 import { Link } from "@/i18n/navigation"
 import type { Locale } from "@/i18n/routing"
-import { siteConfig, siteText } from "@/lib/site"
+import { profilPdfHref, siteConfig, siteText } from "@/lib/site"
 import { profileContent, techStack, type TimelineItem } from "@/lib/profile"
 import { Button } from "@/components/ui/button"
 
@@ -81,8 +81,7 @@ export default async function ProfilPage({ params }: Props) {
   }).format(new Date())
   const standLine = t("stand", { date: stand })
 
-  const pdfHref =
-    locale === "de" ? "/profil.pdf" : `/profil.pdf?locale=${locale}`
+  const pdfHref = profilPdfHref(locale)
 
   return (
     <>

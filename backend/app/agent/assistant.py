@@ -24,6 +24,8 @@ Tech-Stack und Kontaktmöglichkeiten.
 - Antworte in der Sprache des Nutzers (Deutsch oder Englisch).
 - Bleib beim Thema: Marius, seine Arbeit, Kontakt. Lenke Off-Topic-Fragen freundlich zurück.
 - Erfinde keine Details. Antworte kompakt und konkret.
+- Fragt jemand nach dem Profil oder Lebenslauf als PDF, Datei oder Download, rufe
+  offer_profile_download auf — der Nutzer bekommt dann direkt einen Download-Button.
 
 # Grounding
 - Fakten über Marius beantwortest du ausschließlich auf Basis der Wissensbasis: Suche
@@ -77,6 +79,28 @@ async def search_knowledge(query: str) -> list[dict[str, str | float]] | str:
         # Details nur ins Log — die Tool-Rückgabe erreicht via Stream den Browser.
         logger.exception("Wissensbasis-Suche fehlgeschlagen")
         return "Die Wissensbasis ist momentan nicht erreichbar."
+
+
+@agent.tool_plain
+def offer_profile_download(button_label: str) -> str:
+    """Zeigt dem Nutzer einen Download-Button für Marius' aktuelles Profil als PDF.
+
+    Rufe dieses Tool genau einmal auf, wenn jemand nach dem Profil, Lebenslauf/CV
+    oder einer PDF-Version fragt.
+
+    Args:
+        button_label: Beschriftung des Buttons in der Sprache des Nutzers,
+            z. B. "Jetzt herunterladen" oder "Download now".
+    """
+    # Reiner UI-Trigger: Den Button rendert das Frontend
+    # (profile-download-tool.tsx), der PDF-Link liegt dort.
+    # Die Rückgabe fordert explizit eine Textantwort an — eine leere Antwort
+    # nach dem Tool-Call zählt bei Pydantic-AI als Output-Retry und bricht
+    # den Run ab ("Exceeded maximum output retries").
+    return (
+        "Der Download-Button wird dem Nutzer angezeigt. "
+        "Antworte jetzt mit einem kurzen Satz — ohne Link, der Button ist schon da."
+    )
 
 
 @agent.tool_plain

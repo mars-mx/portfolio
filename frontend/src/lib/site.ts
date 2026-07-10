@@ -13,6 +13,11 @@ export const siteConfig = {
   },
 } as const
 
+/** Href der PDF-Route (app/profil.pdf) — genutzt von der Profil-Seite und dem Chat-Download-Button. */
+export function profilPdfHref(locale: Locale): string {
+  return locale === "de" ? "/profil.pdf" : `/profil.pdf?locale=${locale}`
+}
+
 export const siteText: Record<
   Locale,
   { tagline: string; description: string }
