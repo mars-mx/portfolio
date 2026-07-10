@@ -11,7 +11,11 @@ import { Thread } from "@/components/assistant-ui/thread"
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8210"
 
-export function Assistant() {
+export function Assistant({
+  variant = "page",
+}: {
+  variant?: "page" | "widget"
+}) {
   const runtime = useChatRuntime({
     transport: new AssistantChatTransport({
       api: `${apiUrl}/api/chat`,
@@ -21,7 +25,7 @@ export function Assistant() {
   return (
     <AssistantRuntimeProvider runtime={runtime}>
       <KnowledgeSearchToolUI />
-      <Thread />
+      <Thread variant={variant} />
     </AssistantRuntimeProvider>
   )
 }

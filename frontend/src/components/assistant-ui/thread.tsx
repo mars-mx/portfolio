@@ -80,6 +80,9 @@ export type ThreadComponents = {
 
 export type ThreadProps = {
   components?: ThreadComponents | undefined;
+  // "widget": Composer sitzt auch im leeren Zustand unten (Welcome zentriert
+  // im Raum darüber) statt als Ganzes vertikal zentriert wie auf /chat.
+  variant?: "page" | "widget";
 };
 
 const EMPTY_COMPONENTS: ThreadComponents = {};
@@ -93,17 +96,23 @@ const isNewChatView = (s: AssistantState) =>
   s.thread.messages.length === 0 &&
   (!s.thread.isLoading || s.threads.isLoading);
 
-export const Thread: FC<ThreadProps> = ({ components = EMPTY_COMPONENTS }) => {
+export const Thread: FC<ThreadProps> = ({
+  components = EMPTY_COMPONENTS,
+  variant = "page",
+}) => {
   const isEmpty = useAuiState(isNewChatView);
 
   return (
     <ThreadComponentsContext.Provider value={components}>
-      <ThreadRoot isEmpty={isEmpty} />
+      <ThreadRoot isEmpty={isEmpty} variant={variant} />
     </ThreadComponentsContext.Provider>
   );
 };
 
-const ThreadRoot: FC<{ isEmpty: boolean }> = ({ isEmpty }) => {
+const ThreadRoot: FC<{ isEmpty: boolean; variant: "page" | "widget" }> = ({
+  isEmpty,
+  variant,
+}) => {
   const { Welcome = ThreadWelcome } = useContext(ThreadComponentsContext);
 
   return (
@@ -127,11 +136,17 @@ const ThreadRoot: FC<{ isEmpty: boolean }> = ({ isEmpty }) => {
         <div
           className={cn(
             "mx-auto flex w-full max-w-(--thread-max-width) flex-1 flex-col px-4 pt-4",
-            isEmpty && "justify-center",
+            isEmpty && variant === "page" && "justify-center",
           )}
         >
           <AuiIf condition={isNewChatView}>
-            <Welcome />
+            <div
+              className={cn(
+                variant === "widget" && "flex flex-1 flex-col justify-center",
+              )}
+            >
+              <Welcome />
+            </div>
           </AuiIf>
 
           <div

@@ -9,6 +9,7 @@ import { routing } from "@/i18n/routing";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { ChatWidget } from "@/components/chat-widget";
 import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
@@ -75,6 +76,7 @@ export default async function LocaleLayout({
             <SiteHeader />
             <main className="flex min-h-0 flex-1 flex-col">{children}</main>
             <SiteFooter />
+            <ChatWidget />
             <Toaster />
           </NextIntlClientProvider>
         </ThemeProvider>

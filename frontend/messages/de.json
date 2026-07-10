@@ -61,7 +61,11 @@
     "searchTitle": "Wissensbasis durchsucht",
     "searchQuery": "Suchanfrage",
     "searchFailed": "Wissensbasis-Suche fehlgeschlagen",
-    "disclaimer": "Antworten können Fehler enthalten."
+    "disclaimer": "Antworten können Fehler enthalten.",
+    "widgetTitle": "KI-Assistent",
+    "widgetOpen": "Chat öffnen",
+    "widgetClose": "Chat schließen",
+    "widgetExpand": "Chat-Seite öffnen"
   },
   "contactMenu": {
     "whatsapp": "WhatsApp",

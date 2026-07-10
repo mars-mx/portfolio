@@ -61,7 +61,11 @@
     "searchTitle": "Knowledge base searched",
     "searchQuery": "Search query",
     "searchFailed": "Knowledge base search failed",
-    "disclaimer": "Responses may contain mistakes."
+    "disclaimer": "Responses may contain mistakes.",
+    "widgetTitle": "AI assistant",
+    "widgetOpen": "Open chat",
+    "widgetClose": "Close chat",
+    "widgetExpand": "Open chat page"
   },
   "contactMenu": {
     "whatsapp": "WhatsApp",
