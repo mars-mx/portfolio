@@ -59,7 +59,8 @@
     "searchRunning": "Searching knowledge base …",
     "searchTitle": "Knowledge base searched",
     "searchQuery": "Search query",
-    "searchFailed": "Knowledge base search failed"
+    "searchFailed": "Knowledge base search failed",
+    "disclaimer": "Responses may contain mistakes."
   },
   "contactMenu": {
     "whatsapp": "WhatsApp",

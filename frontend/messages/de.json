@@ -59,7 +59,8 @@
     "searchRunning": "Durchsuche Wissensbasis …",
     "searchTitle": "Wissensbasis durchsucht",
     "searchQuery": "Suchanfrage",
-    "searchFailed": "Wissensbasis-Suche fehlgeschlagen"
+    "searchFailed": "Wissensbasis-Suche fehlgeschlagen",
+    "disclaimer": "Antworten können Fehler enthalten."
   },
   "contactMenu": {
     "whatsapp": "WhatsApp",

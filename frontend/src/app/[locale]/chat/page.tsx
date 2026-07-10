@@ -24,10 +24,18 @@ export default async function ChatPage({ params }: Props) {
   const { locale } = await params
   setRequestLocale(locale)
 
-  // Fester Viewport-Ausschnitt unterhalb des sticky Headers (h-14 = 3.5rem);
-  // der Thread scrollt intern, nicht die Seite.
+  // Füllt per Flex exakt den Raum zwischen Header und Footer. data-chat-page
+  // schaltet body im Layout per has-Variante von min-h-full auf h-full: erst
+  // dadurch ist die Höhe definit und der Thread-Viewport scrollt intern,
+  // statt dass die Seite mit dem Chatverlauf wächst (overflow-hidden als
+  // Guard, min-h-0 erlaubt dem Flex-Item zu schrumpfen). Bewusst volle
+  // Breite ohne max-w: die Inhaltsspalte begrenzt der Thread selbst über
+  // --thread-max-width, so liegt die Scrollbar am rechten Fensterrand.
   return (
-    <div className="mx-auto flex h-[calc(100dvh-3.5rem)] w-full max-w-5xl flex-col px-4 sm:px-6">
+    <div
+      data-chat-page
+      className="flex min-h-0 w-full flex-1 flex-col overflow-hidden"
+    >
       <Assistant />
     </div>
   )

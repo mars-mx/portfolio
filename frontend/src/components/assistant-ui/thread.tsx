@@ -48,6 +48,7 @@ import {
   SquareIcon,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import {
   createContext,
   useContext,
@@ -107,7 +108,10 @@ const ThreadRoot: FC<{ isEmpty: boolean }> = ({ isEmpty }) => {
 
   return (
     <ThreadPrimitive.Root
-      className="aui-root aui-thread-root bg-background @container flex h-full flex-col"
+      // Marks an active conversation; the site footer hides itself via
+      // body:has() when this attribute is present (see site-footer.tsx).
+      data-chat-active={isEmpty ? undefined : ""}
+      className="aui-root aui-thread-root bg-background @container flex h-full min-h-0 flex-1 flex-col"
       style={{
         ["--thread-max-width" as string]: "44rem",
         ["--composer-bg" as string]:
@@ -117,9 +121,8 @@ const ThreadRoot: FC<{ isEmpty: boolean }> = ({ isEmpty }) => {
       }}
     >
       <ThreadPrimitive.Viewport
-        turnAnchor="top"
         data-slot="aui_thread-viewport"
-        className="relative flex flex-1 flex-col overflow-x-auto overflow-y-scroll scroll-smooth"
+        className="relative flex min-h-0 flex-1 flex-col overflow-x-auto overflow-y-auto overscroll-contain scroll-smooth [scrollbar-gutter:stable_both-edges]"
       >
         <div
           className={cn(
@@ -153,6 +156,7 @@ const ThreadRoot: FC<{ isEmpty: boolean }> = ({ isEmpty }) => {
             <AuiIf condition={(s) => isNewChatView(s) && s.composer.isEmpty}>
               <ThreadSuggestions />
             </AuiIf>
+            <ThreadDisclaimer />
           </ThreadPrimitive.ViewportFooter>
         </div>
       </ThreadPrimitive.Viewport>
@@ -197,6 +201,32 @@ const ThreadWelcome: FC = () => {
         {t("welcomeHint")}
       </p>
     </div>
+  );
+};
+
+// Ersetzt auf /chat den SiteFooter: Impressum und Datenschutz müssen von
+// jeder Seite aus erreichbar bleiben, dazu der übliche KI-Disclaimer.
+const ThreadDisclaimer: FC = () => {
+  const t = useTranslations("chat");
+  const tFooter = useTranslations("footer");
+  return (
+    <p className="aui-thread-disclaimer text-muted-foreground/80 -mt-2 text-center text-xs">
+      {t("disclaimer")}
+      {" · "}
+      <Link
+        href="/impressum"
+        className="hover:text-foreground underline-offset-2 hover:underline"
+      >
+        {tFooter("impressum")}
+      </Link>
+      {" · "}
+      <Link
+        href="/datenschutz"
+        className="hover:text-foreground underline-offset-2 hover:underline"
+      >
+        {tFooter("datenschutz")}
+      </Link>
+    </p>
   );
 };
 

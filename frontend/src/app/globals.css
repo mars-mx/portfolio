@@ -123,6 +123,12 @@
   html {
     scrollbar-gutter: stable;
   }
+  /* Chat-Seite: body ist auf Viewport-Höhe fixiert, eine Seiten-Scrollbar
+     gibt es nie — ohne Gutter reicht die Thread-Scrollbar bis an den
+     Fensterrand statt 15px davor zu enden. */
+  html:has([data-chat-page]) {
+    scrollbar-gutter: auto;
+  }
   body {
     @apply bg-background text-foreground;
   }

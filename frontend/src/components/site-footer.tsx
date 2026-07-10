@@ -1,3 +1,5 @@
+"use client"
+
 import { useTranslations } from "next-intl"
 
 import { Link } from "@/i18n/navigation"
@@ -8,7 +10,9 @@ export function SiteFooter() {
   const t = useTranslations("footer")
 
   return (
-    <footer className="border-t border-border/60 print:hidden">
+    // Bei aktivem Chatverlauf ausgeblendet (data-chat-active am Thread-Root);
+    // Impressum/Datenschutz übernimmt dort die Disclaimer-Zeile im Thread.
+    <footer className="border-t border-border/60 print:hidden [body:has([data-chat-active])_&]:hidden">
       <div className="mx-auto flex max-w-5xl flex-col gap-4 px-4 py-8 text-sm sm:flex-row sm:items-center sm:justify-between sm:px-6">
         <div className="flex flex-col gap-1">
           <span className="font-mono font-semibold">{siteConfig.name}</span>
