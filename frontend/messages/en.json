@@ -6,6 +6,7 @@
   "nav": {
     "home": "Home",
     "profil": "Profile",
+    "chat": "Chat",
     "kontakt": "Contact"
   },
   "localeSwitcher": {
@@ -40,6 +41,37 @@
     "back": "Back",
     "download": "Download PDF",
     "stand": "As of {date}"
+  },
+  "chat": {
+    "title": "Chat",
+    "metaDescription": "AI assistant of Marius Schäffer: ask about projects, experience and tech stack directly in the chat.",
+    "welcomeTitle": "How can I help?",
+    "welcomeHint": "Ask me anything about Marius, his projects or his tech stack.",
+    "composerPlaceholder": "Send a message …",
+    "send": "Send",
+    "cancel": "Stop",
+    "copy": "Copy",
+    "retry": "Regenerate",
+    "edit": "Edit",
+    "editCancel": "Cancel",
+    "editUpdate": "Update",
+    "scrollToBottom": "Scroll to bottom",
+    "toolCalls": "{count, plural, one {Function Call} other {Function Calls}}",
+    "searchRunning": "Searching knowledge base …",
+    "searchTitle": "Knowledge base searched",
+    "searchQuery": "Search query",
+    "searchFailed": "Knowledge base search failed",
+    "profileDownloadRunning": "Preparing download …",
+    "profileDownloadButton": "Download now",
+    "disclaimer": "Responses may contain mistakes.",
+    "widgetTitle": "AI assistant",
+    "widgetOpen": "Open chat",
+    "widgetClose": "Close chat",
+    "widgetExpand": "Open chat page",
+    "gateTitle": "Quick security check",
+    "gateHint": "Confirm you're not a bot — then the chat starts.",
+    "gateError": "Verification failed. Please try again.",
+    "errorRateLimit": "That was a bit too many messages. Please try again later."
   },
   "contactMenu": {
     "whatsapp": "WhatsApp",

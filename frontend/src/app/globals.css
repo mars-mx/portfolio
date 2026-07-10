@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "tw-shimmer";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -101,6 +102,16 @@
     background-position: calc(100% + var(--shiny-width)) 0;
     }
   }
+  --animate-breathe: breathe 3.5s ease-in-out infinite;
+  @keyframes breathe {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.08);
+    }
+  }
 }
 
 /* Hero-Intro: reine CSS-Animation statt hydration-gesteuertem motion/react.
@@ -121,6 +132,12 @@
   }
   html {
     scrollbar-gutter: stable;
+  }
+  /* Chat-Seite: body ist auf Viewport-Höhe fixiert, eine Seiten-Scrollbar
+     gibt es nie — ohne Gutter reicht die Thread-Scrollbar bis an den
+     Fensterrand statt 15px davor zu enden. */
+  html:has([data-chat-page]) {
+    scrollbar-gutter: auto;
   }
   body {
     @apply bg-background text-foreground;

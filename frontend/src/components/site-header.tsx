@@ -11,6 +11,7 @@ import { LocaleSwitcher } from "@/components/locale-switcher"
 const navItems = [
   { key: "home", href: "/" },
   { key: "profil", href: "/ueber-mich" },
+  { key: "chat", href: "/chat" },
 ] as const
 
 export function SiteHeader() {

@@ -7,6 +7,11 @@ requires-python = ">=3.12"
 dependencies = [
     "email-validator>=2.3.0",
     "fastapi[standard]>=0.137.2",
+    "numpy>=2.5.1",
+    "pydantic-ai-slim[openai,ui]>=2.7.0",
     "pydantic-settings>=2.14.1",
     "pydantic[email]>=2.13.4",
 ]
+
+[dependency-groups]
+dev = []

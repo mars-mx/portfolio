@@ -31,6 +31,11 @@ ENV NEXT_TELEMETRY_DISABLED=1
 # the /api prefix is routed to the backend by the HTTPRoute).
 ARG NEXT_PUBLIC_API_URL
 ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
+# Cloudflare-Turnstile-Site-Key: public und konstant pro Domain, daher als
+# Default hier committet (kein Secret — er landet ohnehin im Client-JS). Aktiviert
+# das Bot-Gate im Chat; das zugehörige Secret bleibt im Backend (TURNSTILE_SECRET_KEY).
+ARG NEXT_PUBLIC_TURNSTILE_SITE_KEY=0x4AAAAAADzbl7EpQ0HW3Mk-
+ENV NEXT_PUBLIC_TURNSTILE_SITE_KEY=$NEXT_PUBLIC_TURNSTILE_SITE_KEY
 RUN pnpm build
 
 # ---- Runner -----------------------------------------------------------------

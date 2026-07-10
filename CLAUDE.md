@@ -16,11 +16,14 @@ make dev        # backend + frontend together (scripts/dev.sh), Ctrl+C stops bot
 make backend    # backend only (uvicorn --reload)
 make frontend   # frontend only
 make build      # frontend production build
+make knowledge  # regenerate backend/knowledge/website-*.md from frontend/src/lib
+make index      # build/refresh the embedding index (backend/.cache/, also for Docker builds)
 make stop       # kill processes on both ports
 ```
 
 - **Ports are deliberately NOT 3000/8000** (usually taken on this machine): frontend → `3210`, backend → `8210` (API docs at `/docs`). Override: `make dev FRONTEND_PORT=4000 BACKEND_PORT=9000`.
-- `make dev`/`make backend`/`make frontend` automatically set `NEXT_PUBLIC_API_URL` and `CORS_ORIGINS` to match the chosen ports — if you start the servers manually instead, you must set these yourself or contact-form requests fail CORS.
+- `make dev`/`make backend`/`make frontend` automatically set `NEXT_PUBLIC_API_URL` and `CORS_ORIGINS` to match the chosen ports — if you start the servers manually instead, you must set these yourself or chat requests fail CORS.
+- Backend make targets load `backend/.env` via `uv run --env-file` (already-set env vars win). Secrets like `OPENAI_API_KEY` live there locally; the app itself has no dotenv code — SDKs read keys straight from the process environment.
 - Lint: `cd frontend && pnpm lint` (ESLint 9 + eslint-config-next). No Python linter is configured.
 - There is **no test suite** in either package.
 
@@ -34,10 +37,15 @@ Use **Conventional Commits**: `type(scope): description` — e.g. `feat(frontend
 
 - **Content lives as data, not in pages.** `src/lib/site.ts` holds site config (name, tagline, nav, social links); `src/lib/profile.ts` holds the full profile content (services, projekte, werdegang, ausbildung, techStack). This data is consumed by both the HTML pages **and** the PDF — edit content there, not in the page components.
 - **PDF generation:** `src/app/profil.pdf/route.ts` is a route handler that renders `src/components/profil-pdf.tsx` server-side via `@react-pdf/renderer`, using the local Geist TTFs in `src/fonts/`. The `/profil` page is the HTML counterpart of the same data.
-- **Contact:** there is no contact page/form — the "Kontakt" entries (hero CTA + header) open `src/components/contact-menu.tsx`, a dropdown with WhatsApp and mailto links from `siteConfig`. Nothing in the frontend currently calls the backend.
+- **Contact:** there is no contact page/form — the "Kontakt" entries (hero CTA + header) open `src/components/contact-menu.tsx`, a dropdown with WhatsApp and mailto links from `siteConfig`.
+- **Chat:** `/chat` renders `src/components/assistant.tsx` (assistant-ui + AI SDK v6 transport) against the backend's `POST /api/chat`. Thread UI lives in `src/components/assistant-ui/`; `knowledge-search-tool.tsx` renders the agent's `search_knowledge` tool calls (sources, scores).
 - **UI components:** `src/components/ui/` mixes shadcn/ui primitives and MagicUI effect components (blur-fade, border-beam, dot-pattern, …). shadcn config in `components.json` (style `radix-nova`, base color `neutral`, lucide icons, `@/` aliases). Tailwind v4 has no config file — theme tokens are oklch CSS variables in `src/app/globals.css` (`:root` + `.dark`), dark mode via next-themes and the `@custom-variant dark`.
 - **Tailwind v4 / Lightning CSS gotcha:** when writing raw CSS with `backdrop-filter`, put `-webkit-backdrop-filter` **before** the unprefixed property (see `globals.css` glass styles) — the other order breaks the blur in Chrome.
 
 ### Backend (`backend/` — FastAPI, Python ≥3.12, uv)
 
-Small and deliberate: `app/main.py` (app entry, CORS middleware, `GET /api/health`), `app/api/routes.py` (`POST /api/contact` — currently **only logs** the request and has no frontend caller since the contact form was removed), `app/schemas/contact.py` (Pydantic models), `app/core/config.py` (pydantic-settings loading `.env`; `CORS_ORIGINS` is a comma-separated string).
+Small and deliberate: `app/main.py` (app entry, CORS middleware, lifespan loads the knowledge index, `GET /api/health`), `app/api/routes.py` (`POST /api/chat` — streams the Pydantic-AI agent as AI SDK UI Message Stream v6; `POST /api/chat/verify` — exchanges a Cloudflare Turnstile token for an HMAC-signed session token; `POST /api/contact` — currently **only logs** the request and has no frontend caller since the contact form was removed), `app/agent/` (Pydantic-AI agent + file-based RAG knowledge base), `app/schemas/` (Pydantic models), `app/core/config.py` (pydantic-settings loading `.env`; `AI_MODEL` is a provider-agnostic Pydantic-AI model string, default `openai:gpt-5.5`).
+
+- **Turnstile bot protection (opt-in):** setting `TURNSTILE_SECRET_KEY` (backend) + `NEXT_PUBLIC_TURNSTILE_SITE_KEY` (frontend) gates the chat — the frontend overlay (`src/components/chat-gate.tsx`) runs the challenge once and invisibly (UI appears only for interactive challenges or on errors), stores the session token from `/api/chat/verify` in sessionStorage, and sends it as `X-Chat-Session` on every `/api/chat` call (verified in `app/core/turnstile.py`, TTL 1 h, 401 re-opens the gate). Both unset = chat is open (local default).
+
+- **Knowledge base:** content in `backend/knowledge/*.md` — the `website-*.md` files are **generated** (`make knowledge`, source of truth is `frontend/src/lib/profile.ts`/`site.ts`), hand-written background docs go next to them. Embedding index is a hash-guarded JSON cache in `backend/.cache/` (gitignored, self-seeds on startup). Architecture and rationale: `docs/wissensbasis.md`.

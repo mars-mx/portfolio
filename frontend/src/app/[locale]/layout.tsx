@@ -9,6 +9,7 @@ import { routing } from "@/i18n/routing";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { ChatWidget } from "@/components/chat-widget";
 import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
@@ -62,7 +63,9 @@ export default async function LocaleLayout({
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
+      {/* Auf Seiten mit [data-chat-page] (Chat) wird body auf Viewport-Höhe
+          fixiert, damit nur der Thread-Viewport scrollt statt der Seite. */}
+      <body className="min-h-full flex flex-col has-[[data-chat-page]]:h-full">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -71,8 +74,9 @@ export default async function LocaleLayout({
         >
           <NextIntlClientProvider>
             <SiteHeader />
-            <main className="flex-1">{children}</main>
+            <main className="flex min-h-0 flex-1 flex-col">{children}</main>
             <SiteFooter />
+            <ChatWidget />
             <Toaster />
           </NextIntlClientProvider>
         </ThemeProvider>
