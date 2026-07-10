@@ -7,6 +7,7 @@ import {
   useChatRuntime,
 } from "@assistant-ui/react-ai-sdk"
 import type { UIMessage } from "ai"
+import { useTranslations } from "next-intl"
 
 import { KnowledgeSearchToolUI } from "@/components/assistant-ui/knowledge-search-tool"
 import { ProfileDownloadToolUI } from "@/components/assistant-ui/profile-download-tool"
@@ -84,6 +85,7 @@ function AssistantChat({
   variant: "page" | "widget"
   onReset: () => void
 }) {
+  const t = useTranslations("chat")
   // sessionStorage ist beim ersten Render verfügbar, weil der Assistant nur
   // clientseitig rendert (ssr: false via assistant-client.tsx).
   const [gate, setGate] = useState<"locked" | "open">(() =>
@@ -116,6 +118,13 @@ function AssistantChat({
         if (response.status === 401) {
           clearChatSession()
           setGate("locked")
+        }
+        // 429 (Rate-Limit des Reverse Proxy) liefert einen HTML-Body — den
+        // würde die AI SDK sonst wörtlich als Fehlertext in den Thread
+        // stellen. Stattdessen mit verständlicher Meldung fehlschlagen;
+        // MessageError in thread.tsx zeigt sie unter der Nachricht an.
+        if (response.status === 429) {
+          throw new Error(t("errorRateLimit"))
         }
         return response
       },

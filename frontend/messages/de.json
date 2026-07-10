@@ -71,7 +71,7 @@
     "gateTitle": "Kurzer Sicherheitscheck",
     "gateHint": "Einmal bestätigen, dass du kein Bot bist — dann startet der Chat.",
     "gateError": "Verifizierung fehlgeschlagen. Bitte versuch es erneut.",
-    "errorRateLimit": "Gerade kommen zu viele Anfragen an. Bitte warte einen Moment und versuch es dann noch einmal."
+    "errorRateLimit": "Das waren etwas viele Nachrichten. Bitte versuche es später noch einmal."
   },
   "contactMenu": {
     "whatsapp": "WhatsApp",
