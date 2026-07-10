@@ -67,7 +67,11 @@
     "widgetTitle": "KI-Assistent",
     "widgetOpen": "Chat öffnen",
     "widgetClose": "Chat schließen",
-    "widgetExpand": "Chat-Seite öffnen"
+    "widgetExpand": "Chat-Seite öffnen",
+    "gateTitle": "Kurzer Sicherheitscheck",
+    "gateHint": "Einmal bestätigen, dass du kein Bot bist — dann startet der Chat.",
+    "gateError": "Verifizierung fehlgeschlagen. Bitte versuch es erneut.",
+    "errorRateLimit": "Gerade kommen zu viele Anfragen an. Bitte warte einen Moment und versuch es dann noch einmal."
   },
   "contactMenu": {
     "whatsapp": "WhatsApp",

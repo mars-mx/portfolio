@@ -67,7 +67,11 @@
     "widgetTitle": "AI assistant",
     "widgetOpen": "Open chat",
     "widgetClose": "Close chat",
-    "widgetExpand": "Open chat page"
+    "widgetExpand": "Open chat page",
+    "gateTitle": "Quick security check",
+    "gateHint": "Confirm you're not a bot — then the chat starts.",
+    "gateError": "Verification failed. Please try again.",
+    "errorRateLimit": "Too many requests right now. Please wait a moment and try again."
   },
   "contactMenu": {
     "whatsapp": "WhatsApp",
