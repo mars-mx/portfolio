@@ -43,9 +43,10 @@ export const techStack = [
   "FastAPI",
   "PostgreSQL",
   "Docker",
+  "Kubernetes",
   "Terraform",
   "AWS",
-  "GCP",
+  "Azure AI Foundry",
 ]
 
 export const profileContent: Record<Locale, ProfileContent> = {
@@ -130,7 +131,7 @@ export const profileContent: Record<Locale, ProfileContent> = {
         industry: "SaaS",
         role: "Gründer & CTO",
         note: "Technische Gesamtverantwortung für das SaaS-Produkt: asynchrone AI-Processing-Queue mit Skalierung über AWS Lambda & SQS, LLM-Integration sowie mandantenfähige Nutzer- und Abrechnungsstruktur.",
-        stack: ["FastAPI", "Pydantic AI", "PostgreSQL", "pgvector"],
+        stack: ["FastAPI", "Pydantic AI", "PostgreSQL", "pgvector", "Kubernetes"],
       },
       {
         period: "2024 – 2026",
@@ -239,7 +240,7 @@ export const profileContent: Record<Locale, ProfileContent> = {
         industry: "SaaS",
         role: "Founder & CTO",
         note: "Overall technical responsibility for the SaaS product: asynchronous AI processing queue scaling via AWS Lambda & SQS, LLM integration, and a multi-tenant user and billing structure.",
-        stack: ["FastAPI", "Pydantic AI", "PostgreSQL", "pgvector"],
+        stack: ["FastAPI", "Pydantic AI", "PostgreSQL", "pgvector", "Kubernetes"],
       },
       {
         period: "2024 – 2026",

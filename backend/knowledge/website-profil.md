@@ -38,6 +38,7 @@ Die Disziplin hinter zuverlässigen LLM-Systemen: Was das Modell wann sieht. Pro
 - FastAPI
 - PostgreSQL
 - Docker
+- Kubernetes
 - Terraform
 - AWS
-- GCP
+- Azure AI Foundry

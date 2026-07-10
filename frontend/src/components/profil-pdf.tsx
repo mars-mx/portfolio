@@ -27,7 +27,10 @@ Font.register({
 
 Font.register({
   family: "Geist Mono",
-  src: path.join(fontsDir, "GeistMono-400.ttf"),
+  fonts: [
+    { src: path.join(fontsDir, "GeistMono-400.ttf"), fontWeight: 400 },
+    { src: path.join(fontsDir, "GeistMono-600.ttf"), fontWeight: 600 },
+  ],
 })
 
 // Keine automatische Worttrennung — deutsche Komposita nicht mitten im Wort umbrechen.
@@ -36,10 +39,8 @@ Font.registerHyphenationCallback((word) => [word])
 const zinc = {
   900: "#18181b",
   600: "#52525b",
-  500: "#71717a",
   400: "#a1a1aa",
   200: "#e4e4e7",
-  50: "#fafafa",
 }
 
 // Maße 1:1 aus der /profil-Webansicht übernommen (px × 0.75 = pt).
@@ -76,14 +77,14 @@ const s = StyleSheet.create({
     gap: 24,
   },
   name: {
+    fontFamily: "Geist Mono",
     fontSize: 20.25,
     fontWeight: 600,
-    letterSpacing: -0.4,
   },
   tagline: {
     marginTop: 3,
     fontSize: 9.75,
-    color: zinc[500],
+    color: zinc[600],
   },
   intro: {
     marginTop: 10.5,
@@ -101,7 +102,7 @@ const s = StyleSheet.create({
   contactItem: {
     fontFamily: "Geist Mono",
     fontSize: 6.4,
-    color: zinc[500],
+    color: zinc[600],
   },
   photo: {
     width: 90.7,
@@ -161,34 +162,24 @@ const s = StyleSheet.create({
   micro: {
     fontFamily: "Geist Mono",
     fontSize: 6,
-    letterSpacing: 0.5,
-    textTransform: "uppercase",
     color: zinc[400],
-  },
-  chipRow: {
-    marginTop: 3,
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: 3,
   },
   stackLine: {
-    marginTop: 3,
+    marginTop: 2,
     fontFamily: "Geist Mono",
     fontSize: 6,
     color: zinc[400],
   },
-  chip: {
-    borderWidth: 1,
-    borderColor: zinc[200],
-    backgroundColor: zinc[50],
-    borderRadius: 3,
-    paddingHorizontal: 4.5,
-    paddingVertical: 1.5,
+  techRow: {
+    marginTop: 9,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    rowGap: 3.5,
   },
-  chipText: {
+  techItem: {
     fontFamily: "Geist Mono",
     fontSize: 6,
-    color: zinc[500],
+    color: zinc[600],
   },
   sidePeriod: {
     fontFamily: "Geist Mono",
@@ -203,7 +194,7 @@ const s = StyleSheet.create({
   },
   sideOrg: {
     fontSize: 6.75,
-    color: zinc[500],
+    color: zinc[600],
   },
   footer: {
     marginTop: 12,
@@ -278,9 +269,8 @@ export function ProfilPdf({
             <Text style={s.intro}>{description}</Text>
             <View style={s.contactRow}>
               <Text style={s.contactItem}>{siteConfig.email}</Text>
+              <Text style={s.contactItem}>{siteConfig.phone}</Text>
               <Text style={s.contactItem}>mxdigital.de</Text>
-              <Text style={s.contactItem}>linkedin.com/in/mars-mx</Text>
-              <Text style={s.contactItem}>github.com/mars-mx</Text>
             </View>
           </View>
           <Image
@@ -308,7 +298,7 @@ export function ProfilPdf({
               </View>
             </View>
 
-            <View style={{ marginTop: 18 }}>
+            <View style={{ marginTop: 26 }}>
               <Text style={s.heading}>{labels.projekthistorie}</Text>
               <View style={{ marginTop: 9, gap: 12 }}>
                 {projekte.map((p) => (
@@ -334,18 +324,19 @@ export function ProfilPdf({
               <SideTimeline items={werdegang} />
             </View>
 
-            <View style={{ marginTop: 18 }}>
+            <View style={{ marginTop: 26 }}>
               <Text style={s.heading}>{labels.ausbildung}</Text>
               <SideTimeline items={ausbildung} />
             </View>
 
-            <View style={{ marginTop: 18 }}>
+            <View style={{ marginTop: 26 }}>
               <Text style={s.heading}>{labels.techStack}</Text>
-              <View style={[s.chipRow, { marginTop: 9, gap: 4 }]}>
-                {techStack.map((tech) => (
-                  <View key={tech} style={s.chip}>
-                    <Text style={s.chipText}>{tech}</Text>
-                  </View>
+              <View style={s.techRow}>
+                {techStack.map((tech, i) => (
+                  <Text key={tech} style={s.techItem}>
+                    {tech}
+                    {i < techStack.length - 1 ? "  ·  " : ""}
+                  </Text>
                 ))}
               </View>
             </View>
@@ -355,7 +346,8 @@ export function ProfilPdf({
         {/* Fußzeile */}
         <View style={s.footer}>
           <Text style={s.footerText}>
-            {siteConfig.name} · {siteConfig.brand} · mxdigital.de
+            {siteConfig.name} · {siteConfig.brand} · mxdigital.de ·
+            linkedin.com/in/mars-mx · github.com/mars-mx
           </Text>
           <Text style={s.footerText}>{labels.stand}</Text>
         </View>

@@ -119,7 +119,7 @@ export default async function ProfilPage({ params }: Props) {
         <div className="mx-auto max-w-2xl px-4 pb-16 sm:px-6 lg:hidden print:hidden">
           <header className="flex items-start justify-between gap-4">
             <div className="min-w-0">
-              <h1 className="text-2xl font-semibold tracking-tight">
+              <h1 className="font-mono text-2xl font-semibold">
                 {siteConfig.name}
               </h1>
               <p className="mt-1 text-muted-foreground">{tagline}</p>
@@ -140,9 +140,8 @@ export default async function ProfilPage({ params }: Props) {
           </p>
           <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 font-mono text-xs text-muted-foreground">
             <span>{siteConfig.email}</span>
+            <span>{siteConfig.phone}</span>
             <span>mxdigital.de</span>
-            <span>linkedin.com/in/mars-mx</span>
-            <span>github.com/mars-mx</span>
           </div>
 
           <section className="mt-10 border-t pt-8">
@@ -208,9 +207,10 @@ export default async function ProfilPage({ params }: Props) {
             </ul>
           </section>
 
-          <p className="mt-10 border-t pt-4 font-mono text-xs text-muted-foreground/70">
-            {standLine}
-          </p>
+          <div className="mt-10 border-t pt-4 font-mono text-xs text-muted-foreground/70">
+            <p>linkedin.com/in/mars-mx · github.com/mars-mx</p>
+            <p className="mt-1">{standLine}</p>
+          </div>
         </div>
 
         {/* A4-Bogen — ab lg und im Druck */}
@@ -230,7 +230,7 @@ export default async function ProfilPage({ params }: Props) {
             {/* Kopf */}
             <header className="mt-5 flex items-start justify-between gap-8">
               <div className="min-w-0">
-                <h1 className="text-[27px] font-semibold leading-tight tracking-tight">
+                <h1 className="font-mono text-[27px] font-semibold leading-tight">
                   {siteConfig.name}
                 </h1>
                 <p className="mt-1 text-[13px] text-zinc-500">{tagline}</p>
@@ -239,9 +239,8 @@ export default async function ProfilPage({ params }: Props) {
                 </p>
                 <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 font-mono text-[8.5px] text-zinc-500">
                   <span>{siteConfig.email}</span>
+                  <span>{siteConfig.phone}</span>
                   <span>mxdigital.de</span>
-                  <span>linkedin.com/in/mars-mx</span>
-                  <span>github.com/mars-mx</span>
                 </div>
               </div>
               <div className="relative size-[32mm] shrink-0 overflow-hidden rounded-full border border-zinc-200">
@@ -358,7 +357,8 @@ export default async function ProfilPage({ params }: Props) {
             {/* Fußzeile */}
             <div className="mt-4 flex items-baseline justify-between border-t border-zinc-200 pt-2.5 font-mono text-[8px] text-zinc-400">
               <span>
-                {siteConfig.name} · {siteConfig.brand} · mxdigital.de
+                {siteConfig.name} · {siteConfig.brand} · mxdigital.de ·
+                linkedin.com/in/mars-mx · github.com/mars-mx
               </span>
               <span>{standLine}</span>
             </div>

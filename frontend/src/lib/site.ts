@@ -5,6 +5,7 @@ export const siteConfig = {
   brand: "MX Digital",
   url: "https://mxdigital.de",
   email: "marius@mxdigital.de",
+  phone: "+49 1520 9608934",
   whatsapp: "https://wa.me/4915251600215",
   social: {
     github: "https://github.com/mars-mx",

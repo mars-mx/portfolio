@@ -22,7 +22,7 @@ Entwicklung eines KI-Telefonassistenten als Self-Service-SaaS: Wissensdatenbank 
 
 Technische Gesamtverantwortung für das SaaS-Produkt: asynchrone AI-Processing-Queue mit Skalierung über AWS Lambda & SQS, LLM-Integration sowie mandantenfähige Nutzer- und Abrechnungsstruktur.
 
-**Stack:** FastAPI, Pydantic AI, PostgreSQL, pgvector
+**Stack:** FastAPI, Pydantic AI, PostgreSQL, pgvector, Kubernetes
 
 ## PLM-Migration von CORBA zur Web-App
 
