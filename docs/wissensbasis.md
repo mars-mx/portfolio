@@ -45,8 +45,8 @@ Content-Änderungen neu.
 **Retrieval**: Der Agent (Pydantic AI) bekommt per Instructions den
 Dokument-Index und zwei Tools: `search_knowledge` (semantische Top-5-Suche,
 für Präzision) und `read_document` (ganzes Dokument, für Tiefe). Grounding per
-Instructions: Faktenfragen nur nach Suche beantworten, Quelldokument nennen,
-Lücken offen zugeben. Das Frontend rendert die Suche sichtbar
+Instructions: Faktenfragen nur nach Suche beantworten, Lücken offen zugeben —
+Quellen nennt der Antworttext nicht. Das Frontend rendert die Suche sichtbar
 (`knowledge-search-tool.tsx`): Query, gefundene Dokumente und Scores.
 
 ## Warum keine Vektor-Datenbank?
