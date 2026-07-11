@@ -56,7 +56,7 @@ export default async function Home({ params }: Props) {
             "opacity-60"
           )}
         />
-        <div className="mx-auto flex max-w-5xl flex-col-reverse items-start gap-10 px-4 py-24 sm:px-6 sm:py-32 lg:flex-row lg:items-center lg:justify-between">
+        <div className="mx-auto flex max-w-5xl flex-col-reverse items-start gap-10 px-4 py-12 sm:px-6 sm:py-32 lg:flex-row lg:items-center lg:justify-between">
           <div>
             <div className="motion-safe:animate-[hero-enter_0.4s_ease-out_0.1s_backwards]">
               <a
