@@ -41,8 +41,7 @@ export function siteJsonLd(locale: Locale) {
         jobTitle: tagline,
         description,
         email: siteConfig.email,
-        // Bewusst kein `telephone`: site.ts und Impressum nennen
-        // unterschiedliche Nummern — erst klären, dann ergänzen.
+        telephone: siteConfig.phone,
         sameAs: [siteConfig.social.github, siteConfig.social.linkedin],
         worksFor: [
           { "@type": "Organization", name: siteConfig.brand, url: siteConfig.url },

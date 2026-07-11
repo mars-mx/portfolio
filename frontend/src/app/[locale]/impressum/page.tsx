@@ -43,7 +43,7 @@ export default async function ImpressumPage({ params }: Props) {
         Deutschland
       </p>
       <p>
-        Tel.: 015251600215
+        Tel.: 015209608934
         <br />
         E-Mail:{" "}
         <a

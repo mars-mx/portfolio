@@ -7,7 +7,7 @@ description: E-Mail, WhatsApp und Social-Media-Profile von Marius Schäffer.
 ## Kontakt
 
 - **E-Mail:** marius@mxdigital.de
-- **WhatsApp:** https://wa.me/4915251600215
+- **WhatsApp:** https://wa.me/4915209608934
 - **GitHub:** https://github.com/mars-mx
 - **LinkedIn:** https://linkedin.com/in/mars-mx/
 - **Website:** https://mxdigital.de

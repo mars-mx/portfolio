@@ -55,7 +55,7 @@ export default async function DatenschutzPage({ params }: Props) {
         1.2 Verantwortlicher für die Datenverarbeitung auf dieser Website im
         Sinne der Datenschutz-Grundverordnung (DSGVO) ist Marius Schäffer, MX
         Digital, Hollerallee 87, 28209 Bremen, Deutschland, Tel.:
-        015251600215, E-Mail: marius@mxdigital.de. Der für die Verarbeitung von
+        015209608934, E-Mail: marius@mxdigital.de. Der für die Verarbeitung von
         personenbezogenen Daten Verantwortliche ist diejenige natürliche oder
         juristische Person, die allein oder gemeinsam mit anderen über die
         Zwecke und Mittel der Verarbeitung von personenbezogenen Daten
