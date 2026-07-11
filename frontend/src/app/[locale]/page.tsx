@@ -9,7 +9,7 @@ import { siteConfig, siteText } from "@/lib/site"
 import { profileContent } from "@/lib/profile"
 import { cn } from "@/lib/utils"
 import { GitHubIcon } from "@/components/icons"
-import { ContactMenu } from "@/components/contact-menu"
+import { ChatCta } from "@/components/chat-cta"
 import { Button } from "@/components/ui/button"
 import { AnimatedShinyText } from "@/components/ui/animated-shiny-text"
 import { DotPattern } from "@/components/ui/dot-pattern"
@@ -56,7 +56,7 @@ export default async function Home({ params }: Props) {
             "opacity-60"
           )}
         />
-        <div className="mx-auto flex max-w-5xl flex-col-reverse items-start gap-10 px-4 py-12 sm:px-6 sm:py-32 lg:flex-row lg:items-center lg:justify-between">
+        <div className="mx-auto flex max-w-5xl flex-col-reverse items-start gap-10 px-4 py-24 sm:px-6 sm:py-32 lg:flex-row lg:items-center lg:justify-between">
           <div>
             <div className="motion-safe:animate-[hero-enter_0.4s_ease-out_0.1s_backwards]">
               <a
@@ -89,7 +89,7 @@ export default async function Home({ params }: Props) {
 
             <div className="motion-safe:animate-[hero-enter_0.4s_ease-out_0.4s_backwards]">
               <div className="mt-8 flex flex-wrap gap-3">
-                <ContactMenu size="lg" label={t("ctaKontakt")} />
+                <ChatCta label={t("ctaChat")} />
                 <Button size="lg" variant="outline" asChild>
                   <a href={siteConfig.social.github} target="_blank" rel="noreferrer">
                     <GitHubIcon className="size-4" />

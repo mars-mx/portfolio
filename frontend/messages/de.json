@@ -26,7 +26,7 @@
   },
   "home": {
     "greeting": "Moin, ich bin {name}.",
-    "ctaKontakt": "Kontakt aufnehmen"
+    "ctaChat": "Chat starten"
   },
   "about": {
     "title": "Profil",
