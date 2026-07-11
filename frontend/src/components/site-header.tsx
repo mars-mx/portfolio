@@ -6,6 +6,7 @@ import { GitHubIcon, LinkedInIcon } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import { ChatNavLink } from "@/components/chat-nav-link"
 import { ContactMenu } from "@/components/contact-menu"
+import { MobileNav } from "@/components/mobile-nav"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { LocaleSwitcher } from "@/components/locale-switcher"
 
@@ -36,7 +37,7 @@ export function SiteHeader() {
               variant="ghost"
               size="sm"
               asChild
-              className={item.href === "/" ? "hidden sm:inline-flex" : undefined}
+              className="hidden sm:inline-flex"
             >
               {item.href === "/chat" ? (
                 <ChatNavLink>{t(item.key)}</ChatNavLink>
@@ -45,7 +46,12 @@ export function SiteHeader() {
               )}
             </Button>
           ))}
-          <ContactMenu size="sm" variant="ghost" label={t("kontakt")} />
+          <ContactMenu
+            size="sm"
+            variant="ghost"
+            label={t("kontakt")}
+            className="hidden sm:inline-flex"
+          />
           <span className="mx-1 hidden h-5 w-px bg-border sm:block" />
           <Button
             variant="ghost"
@@ -71,6 +77,7 @@ export function SiteHeader() {
           </Button>
           <LocaleSwitcher />
           <ThemeToggle />
+          <MobileNav />
         </nav>
       </div>
     </header>

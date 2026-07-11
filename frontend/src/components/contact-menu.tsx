@@ -18,9 +18,12 @@ type Props = {
   label: string
   size?: React.ComponentProps<typeof Button>["size"]
   variant?: React.ComponentProps<typeof Button>["variant"]
+  className?: string
 }
 
-export function ContactMenu({ label, size, variant }: Props) {
+// Die beiden Kontakt-Einträge (WhatsApp, E-Mail) — auch im mobilen
+// Hamburger-Menü (mobile-nav.tsx) eingebunden.
+export function ContactMenuItems() {
   const t = useTranslations("contactMenu")
 
   // mailto: läuft ohne verknüpftes Mail-Programm (oder im eingebetteten
@@ -35,30 +38,38 @@ export function ContactMenu({ label, size, variant }: Props) {
   }
 
   return (
+    <>
+      <DropdownMenuItem asChild>
+        <a
+          href={siteConfig.whatsapp}
+          target="_blank"
+          rel="noreferrer"
+        >
+          <WhatsAppIcon />
+          {t("whatsapp")}
+        </a>
+      </DropdownMenuItem>
+      <DropdownMenuItem asChild>
+        <a href={`mailto:${siteConfig.email}`} onClick={handleEmailClick}>
+          <Mail />
+          {t("email")}
+        </a>
+      </DropdownMenuItem>
+    </>
+  )
+}
+
+export function ContactMenu({ label, size, variant, className }: Props) {
+  return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button size={size} variant={variant}>
+        <Button size={size} variant={variant} className={className}>
           {label}
           <ChevronDown className="size-4" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start">
-        <DropdownMenuItem asChild>
-          <a
-            href={siteConfig.whatsapp}
-            target="_blank"
-            rel="noreferrer"
-          >
-            <WhatsAppIcon />
-            {t("whatsapp")}
-          </a>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <a href={`mailto:${siteConfig.email}`} onClick={handleEmailClick}>
-            <Mail />
-            {t("email")}
-          </a>
-        </DropdownMenuItem>
+        <ContactMenuItems />
       </DropdownMenuContent>
     </DropdownMenu>
   )

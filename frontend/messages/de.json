@@ -7,7 +7,8 @@
     "home": "Home",
     "profil": "Profil",
     "chat": "Chat",
-    "kontakt": "Kontakt"
+    "kontakt": "Kontakt",
+    "menu": "Menü öffnen"
   },
   "localeSwitcher": {
     "label": "Switch to English"
