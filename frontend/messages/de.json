@@ -25,7 +25,7 @@
     "techStack": "Tech-Stack"
   },
   "home": {
-    "greeting": "Hi, ich bin {name}.",
+    "greeting": "Moin, ich bin {name}.",
     "ctaKontakt": "Kontakt aufnehmen"
   },
   "about": {
