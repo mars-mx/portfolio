@@ -120,7 +120,12 @@ const ThreadRoot: FC<{ isEmpty: boolean; variant: "page" | "widget" }> = ({
       // Marks an active conversation; the site footer hides itself via
       // body:has() when this attribute is present (see site-footer.tsx).
       data-chat-active={isEmpty ? undefined : ""}
-      className="aui-root aui-thread-root bg-background @container flex h-full min-h-0 flex-1 flex-col"
+      className={cn(
+        "aui-root aui-thread-root @container flex h-full min-h-0 flex-1 flex-col",
+        // Im Widget bleibt der Root transparent, damit das Frosted-Glass-
+        // Panel (chat-widget.tsx) durchscheint; die Seite malt selbst.
+        variant === "page" && "bg-background",
+      )}
       style={{
         ["--thread-max-width" as string]: "44rem",
         ["--composer-bg" as string]:
@@ -160,7 +165,12 @@ const ThreadRoot: FC<{ isEmpty: boolean; variant: "page" | "widget" }> = ({
 
           <ThreadPrimitive.ViewportFooter
             className={cn(
-              "aui-thread-viewport-footer bg-background flex flex-col gap-4 overflow-visible pb-4 md:pb-6",
+              "aui-thread-viewport-footer flex flex-col gap-4 overflow-visible pb-4 md:pb-6",
+              // Im Widget frostet der sticky Footer die darunter
+              // durchscrollenden Nachrichten, statt sie hart abzudecken.
+              variant === "page"
+                ? "bg-background"
+                : "bg-background/80 backdrop-blur-md supports-[backdrop-filter]:bg-background/60",
               !isEmpty &&
                 "sticky bottom-0 mt-auto rounded-t-(--composer-radius)",
             )}

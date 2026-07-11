@@ -43,6 +43,9 @@ export function ChatWidget() {
             // Mobil Vollbild, ab sm das schwebende Panel unten rechts.
             "bg-background fixed inset-0 z-50 flex flex-col overflow-hidden print:hidden",
             "sm:border-border sm:inset-auto sm:right-4 sm:bottom-4 sm:h-[min(42rem,calc(100dvh-5rem))] sm:w-[calc(100vw-2rem)] sm:max-w-md sm:rounded-2xl sm:border sm:shadow-lg",
+            // Frosted Glass wie der Site-Header — nur fürs schwebende Panel,
+            // mobil (Vollbild) bleibt der Hintergrund deckend lesbar.
+            "sm:bg-background/80 sm:backdrop-blur-md sm:supports-[backdrop-filter]:bg-background/60",
             open ? "fade-in slide-in-from-bottom-2 animate-in duration-200" : "hidden",
           )}
         >
