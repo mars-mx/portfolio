@@ -9,6 +9,7 @@ import {
 import type { UIMessage } from "ai"
 import { useTranslations } from "next-intl"
 
+import { BookingToolUI } from "@/components/assistant-ui/booking-tool"
 import { KnowledgeSearchToolUI } from "@/components/assistant-ui/knowledge-search-tool"
 import { ProfileDownloadToolUI } from "@/components/assistant-ui/profile-download-tool"
 import { Thread } from "@/components/assistant-ui/thread"
@@ -146,6 +147,7 @@ function AssistantChat({
     <AssistantRuntimeProvider runtime={runtime}>
       <KnowledgeSearchToolUI />
       <ProfileDownloadToolUI />
+      <BookingToolUI />
       <div className="relative flex h-full min-h-0 flex-1 flex-col">
         <Thread variant={variant} />
         {gate === "locked" && turnstileSiteKey && (

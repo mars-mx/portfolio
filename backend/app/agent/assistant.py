@@ -43,13 +43,21 @@ WEB_SEARCH_INSTRUCTIONS = """\
   nichts in den Mund, was nicht aus der Wissensbasis stammt.
 """
 
+BOOKING_INSTRUCTIONS = """\
+- Möchte jemand einen Termin, ein Kennenlernen oder ein Gespräch mit Marius
+  vereinbaren, rufe offer_booking auf — der Nutzer bekommt dann direkt einen
+  Buchungs-Button für Marius' Kalender.
+"""
+
 # defer_model_check: Modellstring erst beim ersten Run auflösen — die App
 # startet damit auch, wenn der Provider-Key (noch) nicht gesetzt ist.
 # WebSearch nutzt die native Websuche des Modells, serverseitig beim Provider
 # (OpenAI Responses API) — nur mit WEB_SEARCH=true, siehe app.core.config.
 agent = Agent(
     settings.ai_model,
-    instructions=INSTRUCTIONS + (WEB_SEARCH_INSTRUCTIONS if settings.web_search else ""),
+    instructions=INSTRUCTIONS
+    + (WEB_SEARCH_INSTRUCTIONS if settings.web_search else "")
+    + (BOOKING_INSTRUCTIONS if settings.booking_url else ""),
     capabilities=[WebSearch()] if settings.web_search else [],
     defer_model_check=True,
 )
@@ -103,6 +111,38 @@ def offer_profile_download(button_label: str) -> str:
         '"Klicke auf die Schaltfläche, um das aktuelle Profil direkt herunterzuladen." '
         "Ohne Link, der Button ist schon da."
     )
+
+
+if settings.booking_url:
+
+    @agent.tool_plain
+    def offer_booking(button_label: str) -> dict[str, str]:
+        """Zeigt dem Nutzer Marius' Buchungskalender direkt im Chat an.
+
+        Rufe dieses Tool genau einmal auf, wenn jemand einen Termin, ein
+        Kennenlernen oder ein Gespräch mit Marius vereinbaren möchte.
+
+        Args:
+            button_label: Beschriftung in der Sprache des Nutzers,
+                z. B. "Termin buchen" oder "Book a meeting".
+        """
+        # Der Buchungslink lebt bewusst nur im Backend (BOOKING_URL): Er erreicht
+        # den Browser ausschließlich als Tool-Ergebnis über den Turnstile-
+        # geschützten Chat-Stream, das Frontend rendert daraus das Widget
+        # (booking-tool.tsx). Einbettbar ist nur die Schedule-URL mit ?gv=true —
+        # der Kurzlink (calendar.app.google) verwirft den Parameter beim
+        # Redirect; ohne embed_url bleibt es beim Button.
+        embeddable = "calendar.google.com" in settings.booking_url
+        return {
+            "url": settings.booking_url,
+            "embed_url": f"{settings.booking_url}?gv=true" if embeddable else "",
+            "hint": (
+                "Der Buchungskalender wird dem Nutzer direkt im Chat angezeigt. "
+                "Antworte jetzt mit einem kurzen Satz in der Sprache des Nutzers, "
+                'sinngemäß: "Such dir hier direkt einen passenden Termin aus." '
+                "Nenne die URL nicht, der Kalender ist schon da."
+            ),
+        }
 
 
 @agent.tool_plain

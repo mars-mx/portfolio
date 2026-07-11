@@ -30,6 +30,12 @@ class Settings(BaseSettings):
     # (NEXT_PUBLIC_TURNSTILE_SITE_KEY).
     turnstile_secret_key: str = ""
 
+    # Google-Kalender-Buchungslink für das Chat-Tool offer_booking. Bewusst nur
+    # hier im Backend (Repo und Frontend-Bundle sind öffentlich): der Link
+    # erreicht den Browser ausschließlich als Tool-Ergebnis über den
+    # Turnstile-geschützten Chat-Stream. Leer = Tool deaktiviert.
+    booking_url: str = ""
+
     @property
     def cors_origins_list(self) -> list[str]:
         return [o.strip() for o in self.cors_origins.split(",") if o.strip()]
