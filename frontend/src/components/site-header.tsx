@@ -4,6 +4,7 @@ import { Link } from "@/i18n/navigation"
 import { siteConfig } from "@/lib/site"
 import { GitHubIcon, LinkedInIcon } from "@/components/icons"
 import { Button } from "@/components/ui/button"
+import { ChatNavLink } from "@/components/chat-nav-link"
 import { ContactMenu } from "@/components/contact-menu"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { LocaleSwitcher } from "@/components/locale-switcher"
@@ -37,7 +38,11 @@ export function SiteHeader() {
               asChild
               className={item.href === "/" ? "hidden sm:inline-flex" : undefined}
             >
-              <Link href={item.href}>{t(item.key)}</Link>
+              {item.href === "/chat" ? (
+                <ChatNavLink>{t(item.key)}</ChatNavLink>
+              ) : (
+                <Link href={item.href}>{t(item.key)}</Link>
+              )}
             </Button>
           ))}
           <ContactMenu size="sm" variant="ghost" label={t("kontakt")} />

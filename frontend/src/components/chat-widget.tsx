@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { MessageCircleIcon, Maximize2Icon, XIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 
@@ -9,6 +9,9 @@ import { AssistantClient } from "@/components/assistant-client"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
+// Öffnet das Widget von außen (mobiler "Chat"-Nav-Link in chat-nav-link.tsx).
+export const CHAT_OPEN_EVENT = "mx-chat:open"
+
 export function ChatWidget() {
   const t = useTranslations("chat")
   const pathname = usePathname()
@@ -16,6 +19,15 @@ export function ChatWidget() {
   // Nach dem ersten Öffnen bleibt der Assistant gemountet (nur per CSS
   // versteckt), damit der Gesprächsverlauf das Schließen überlebt.
   const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    const openChat = () => {
+      setOpen(true)
+      setMounted(true)
+    }
+    window.addEventListener(CHAT_OPEN_EVENT, openChat)
+    return () => window.removeEventListener(CHAT_OPEN_EVENT, openChat)
+  }, [])
 
   // Auf /chat läuft der Chat schon als Seite, dort braucht es kein Widget.
   if (pathname === "/chat") return null
@@ -28,7 +40,9 @@ export function ChatWidget() {
           aria-label={t("widgetTitle")}
           onKeyDown={(e) => e.key === "Escape" && setOpen(false)}
           className={cn(
-            "border-border bg-background fixed right-4 bottom-4 z-50 flex h-[min(42rem,calc(100dvh-5rem))] w-[calc(100vw-2rem)] max-w-md flex-col overflow-hidden rounded-2xl border shadow-lg print:hidden",
+            // Mobil Vollbild, ab sm das schwebende Panel unten rechts.
+            "bg-background fixed inset-0 z-50 flex flex-col overflow-hidden print:hidden",
+            "sm:border-border sm:inset-auto sm:right-4 sm:bottom-4 sm:h-[min(42rem,calc(100dvh-5rem))] sm:w-[calc(100vw-2rem)] sm:max-w-md sm:rounded-2xl sm:border sm:shadow-lg",
             open ? "fade-in slide-in-from-bottom-2 animate-in duration-200" : "hidden",
           )}
         >
@@ -40,7 +54,8 @@ export function ChatWidget() {
                 size="icon"
                 asChild
                 aria-label={t("widgetExpand")}
-                className="text-muted-foreground hover:text-foreground size-8"
+                // Mobil ist das Widget schon Vollbild — Expand wäre redundant.
+                className="text-muted-foreground hover:text-foreground hidden size-8 sm:inline-flex"
               >
                 <Link href="/chat">
                   <Maximize2Icon className="size-4" />
