@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl"
 import { toast } from "sonner"
 
 import { siteConfig } from "@/lib/site"
+import { cn } from "@/lib/utils"
 import { WhatsAppIcon } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import {
@@ -63,7 +64,11 @@ export function ContactMenu({ label, size, variant, className }: Props) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button size={size} variant={variant} className={className}>
+        <Button
+          size={size}
+          variant={variant}
+          className={cn("cursor-pointer active:translate-y-px", className)}
+        >
           {label}
           <ChevronDown className="size-4" />
         </Button>
