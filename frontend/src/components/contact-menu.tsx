@@ -40,7 +40,7 @@ export function ContactMenuItems() {
 
   return (
     <>
-      <DropdownMenuItem asChild>
+      <DropdownMenuItem asChild className="cursor-pointer active:translate-y-px">
         <a
           href={siteConfig.whatsapp}
           target="_blank"
@@ -50,7 +50,7 @@ export function ContactMenuItems() {
           {t("whatsapp")}
         </a>
       </DropdownMenuItem>
-      <DropdownMenuItem asChild>
+      <DropdownMenuItem asChild className="cursor-pointer active:translate-y-px">
         <a href={`mailto:${siteConfig.email}`} onClick={handleEmailClick}>
           <Mail />
           {t("email")}
@@ -73,7 +73,10 @@ export function ContactMenu({ label, size, variant, className }: Props) {
           <ChevronDown className="size-4" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="start">
+      <DropdownMenuContent
+        align="start"
+        className="bg-popover/80 backdrop-blur-md supports-[backdrop-filter]:bg-popover/60"
+      >
         <ContactMenuItems />
       </DropdownMenuContent>
     </DropdownMenu>
