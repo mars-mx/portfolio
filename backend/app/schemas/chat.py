@@ -12,3 +12,13 @@ class ChatVerifyResponse(BaseModel):
 
     session_token: str
     expires_at: int
+
+
+class ChatConsentRequest(BaseModel):
+    """Explizite Zustimmung zur Datenschutzerklärung vor Chat-Beginn."""
+
+    accepted: bool
+
+
+class ChatConsentResponse(BaseModel):
+    ok: bool = True

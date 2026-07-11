@@ -1,4 +1,5 @@
 import logging
+from datetime import UTC, datetime
 
 import httpx
 from fastapi import APIRouter, HTTPException
@@ -14,7 +15,12 @@ from app.core.turnstile import (
     verify_session_token,
     verify_turnstile,
 )
-from app.schemas.chat import ChatVerifyRequest, ChatVerifyResponse
+from app.schemas.chat import (
+    ChatConsentRequest,
+    ChatConsentResponse,
+    ChatVerifyRequest,
+    ChatVerifyResponse,
+)
 from app.schemas.contact import ContactRequest, ContactResponse
 
 # Kostendeckel pro Run: der Endpoint ist öffentlich und unauthentifiziert.
@@ -39,6 +45,32 @@ async def contact(payload: ContactRequest) -> ContactResponse:
     """
     logger.info("Kontaktanfrage von %s <%s>", payload.name, payload.email)
     return ContactResponse(ok=True)
+
+
+def _client_ip(request: Request) -> str:
+    """Client-IP; hinter dem Reverse Proxy steht sie im X-Forwarded-For-Header."""
+    forwarded = request.headers.get("X-Forwarded-For")
+    if forwarded:
+        return forwarded.split(",")[0].strip()
+    return request.client.host if request.client else "unbekannt"
+
+
+@router.post("/chat/consent", response_model=ChatConsentResponse)
+async def chat_consent(
+    payload: ChatConsentRequest, request: Request
+) -> ChatConsentResponse:
+    """Protokolliert die Zustimmung zur Datenschutzerklärung vor Chat-Beginn.
+
+    Dient als Nachweis: IP, Zeitpunkt (UTC) und die explizite Zustimmung
+    landen im Anwendungslog.
+    """
+    logger.info(
+        "Datenschutz-Zustimmung: ip=%s zeit=%s zustimmung=%s",
+        _client_ip(request),
+        datetime.now(UTC).isoformat(),
+        payload.accepted,
+    )
+    return ChatConsentResponse()
 
 
 @router.post("/chat/verify", response_model=ChatVerifyResponse)

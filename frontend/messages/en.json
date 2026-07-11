@@ -77,6 +77,11 @@
     "gateTitle": "Quick security check",
     "gateHint": "Confirm you're not a bot — then the chat starts.",
     "gateError": "Verification failed. Please try again.",
+    "consentTitle": "Before the chat starts",
+    "consentHint": "Your messages and your IP address are processed to answer you. See the <link>privacy policy</link> for details.",
+    "consentAccept": "I have read and accept the privacy policy",
+    "consentAcceptShort": "Accept privacy policy",
+    "consentError": "That didn't work. Please try again.",
     "errorRateLimit": "That was a bit too many messages. Please try again later."
   },
   "contactMenu": {

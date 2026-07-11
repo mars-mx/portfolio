@@ -13,6 +13,7 @@ import { BookingToolUI } from "@/components/assistant-ui/booking-tool"
 import { KnowledgeSearchToolUI } from "@/components/assistant-ui/knowledge-search-tool"
 import { ProfileDownloadToolUI } from "@/components/assistant-ui/profile-download-tool"
 import { Thread } from "@/components/assistant-ui/thread"
+import { ChatConsent, hasChatConsent } from "@/components/chat-consent"
 import { ChatGate } from "@/components/chat-gate"
 import { clearChatSession, getChatSessionToken } from "@/lib/chat-session"
 
@@ -92,6 +93,10 @@ function AssistantChat({
   const [gate, setGate] = useState<"locked" | "open">(() =>
     !turnstileSiteKey || getChatSessionToken() ? "open" : "locked",
   )
+  // Datenschutz-Zustimmung kommt vor allem anderen — solange sie fehlt,
+  // mountet auch das Turnstile-Gate nicht (keine Cloudflare-Challenge ohne
+  // Zustimmung).
+  const [consented, setConsented] = useState(hasChatConsent)
 
   const [initialMessages] = useState(loadMessages)
   const runtime = useChatRuntime({
@@ -150,11 +155,16 @@ function AssistantChat({
       <BookingToolUI />
       <div className="relative flex h-full min-h-0 flex-1 flex-col">
         <Thread variant={variant} />
-        {gate === "locked" && turnstileSiteKey && (
-          <ChatGate
-            siteKey={turnstileSiteKey}
-            onVerified={() => setGate("open")}
-          />
+        {!consented ? (
+          <ChatConsent onAccepted={() => setConsented(true)} />
+        ) : (
+          gate === "locked" &&
+          turnstileSiteKey && (
+            <ChatGate
+              siteKey={turnstileSiteKey}
+              onVerified={() => setGate("open")}
+            />
+          )
         )}
       </div>
     </AssistantRuntimeProvider>

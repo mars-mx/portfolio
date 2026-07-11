@@ -77,6 +77,11 @@
     "gateTitle": "Kurzer Sicherheitscheck",
     "gateHint": "Einmal bestätigen, dass du kein Bot bist — dann startet der Chat.",
     "gateError": "Verifizierung fehlgeschlagen. Bitte versuch es erneut.",
+    "consentTitle": "Bevor der Chat startet",
+    "consentHint": "Deine Nachrichten und deine IP-Adresse werden zur Beantwortung verarbeitet. Details dazu in der <link>Datenschutzerklärung</link>.",
+    "consentAccept": "Ich habe die Datenschutzerklärung gelesen und akzeptiere sie",
+    "consentAcceptShort": "Datenschutzerklärung akzeptieren",
+    "consentError": "Das hat nicht geklappt. Bitte versuch es erneut.",
     "errorRateLimit": "Das waren etwas viele Nachrichten. Bitte versuche es später noch einmal."
   },
   "contactMenu": {
