@@ -67,6 +67,9 @@ function ReaderTimeline({ items }: { items: TimelineItem[] }) {
   )
 }
 
+// Statisch vorgerendert — ohne Revalidierung bliebe "Stand" auf dem Build-Monat stehen.
+export const revalidate = 3600
+
 export default async function ProfilPage({ params }: Props) {
   const { locale } = await params
   setRequestLocale(locale)
