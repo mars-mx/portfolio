@@ -82,7 +82,8 @@
     "consentAccept": "Ich habe die Datenschutzerklärung gelesen und akzeptiere sie",
     "consentAcceptShort": "Datenschutzerklärung akzeptieren",
     "consentError": "Das hat nicht geklappt. Bitte versuch es erneut.",
-    "errorRateLimit": "Das waren etwas viele Nachrichten. Bitte versuche es später noch einmal."
+    "errorRateLimit": "Das waren etwas viele Nachrichten. Bitte versuche es später noch einmal.",
+    "errorUnavailable": "Der Chat ist gerade nicht verfügbar. Bitte versuche es später erneut oder nimm direkt Kontakt auf."
   },
   "contactMenu": {
     "whatsapp": "WhatsApp",

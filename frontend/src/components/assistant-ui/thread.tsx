@@ -373,11 +373,26 @@ const ComposerAction: FC = () => {
   );
 };
 
+// Fehlercode, den das Backend bei jedem fehlgeschlagenen Chat-Run schickt
+// (CHAT_ERROR_CODE in backend/app/api/routes.py) — Details stehen nur im Log.
+const CHAT_ERROR_CODE = "chat_unavailable";
+
 const MessageError: FC = () => {
+  const t = useTranslations("chat");
+  const isUnavailable = useAuiState((s) => {
+    const status = s.message.status;
+    if (status?.type !== "incomplete" || status.reason !== "error") return false;
+    const error = status.error;
+    const text = error instanceof Error ? error.message : String(error ?? "");
+    return text === CHAT_ERROR_CODE;
+  });
   return (
     <MessagePrimitive.Error>
       <ErrorPrimitive.Root className="aui-message-error-root border-destructive bg-destructive/10 text-destructive dark:bg-destructive/5 mt-2 rounded-md border p-3 text-sm dark:text-red-200">
-        <ErrorPrimitive.Message className="aui-message-error-message line-clamp-2" />
+        {/* Andere Fehler (z. B. der übersetzte 429-Text aus assistant.tsx) unverändert anzeigen. */}
+        <ErrorPrimitive.Message className="aui-message-error-message line-clamp-2">
+          {isUnavailable ? t("errorUnavailable") : undefined}
+        </ErrorPrimitive.Message>
       </ErrorPrimitive.Root>
     </MessagePrimitive.Error>
   );

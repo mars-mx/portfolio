@@ -1,14 +1,17 @@
 import logging
+from collections.abc import AsyncIterator
 from datetime import UTC, datetime
 
 import httpx
 from fastapi import APIRouter, HTTPException
-from pydantic_ai.ui.vercel_ai import VercelAIAdapter
+from pydantic_ai.ui.vercel_ai import VercelAIAdapter, VercelAIEventStream
+from pydantic_ai.ui.vercel_ai.response_types import BaseChunk, ErrorChunk
 from pydantic_ai.usage import UsageLimits
 from starlette.requests import Request
 from starlette.responses import Response
 
-from app.agent.assistant import agent
+from app.agent.assistant import agent, chat_model
+from app.agent.upstream import describe_upstream_error
 from app.core.config import settings
 from app.core.turnstile import (
     create_session_token,
@@ -27,6 +30,10 @@ from app.schemas.contact import ContactRequest, ContactResponse
 # Begrenzt Tool-Schleifen und Token-Verbrauch einer einzelnen Anfrage;
 # Rate-Limiting über Requests hinweg ist Sache des Deployments (Reverse Proxy).
 CHAT_USAGE_LIMITS = UsageLimits(request_limit=6, total_tokens_limit=50_000)
+
+# Einziger Fehlertext, den der Browser je sieht; das Frontend übersetzt ihn
+# (MessageError in thread.tsx). Details landen ausschließlich im Log.
+CHAT_ERROR_CODE = "chat_unavailable"
 
 # Header, in dem das Frontend sein Chat-Session-Token mitschickt.
 SESSION_HEADER = "X-Chat-Session"
@@ -93,6 +100,33 @@ async def chat_verify(payload: ChatVerifyRequest) -> ChatVerifyResponse:
     return ChatVerifyResponse(session_token=session_token, expires_at=expires_at)
 
 
+class ChatEventStream(VercelAIEventStream):
+    """Loggt Fehler eines Chat-Runs und schickt dem Client nur CHAT_ERROR_CODE.
+
+    Standardmäßig reicht Pydantic-AI str(exception) an den Browser durch —
+    bei OpenAI inklusive Billing-Link und ohne jede Logzeile.
+    """
+
+    async def on_error(self, error: Exception) -> AsyncIterator[BaseChunk]:
+        # Eine Zeile mit festem Präfix, ohne Freitext/Prompt (greppbar, alarmierbar).
+        if upstream := describe_upstream_error(error):
+            logger.error(upstream.log_line())
+        else:
+            logger.error("chat_run_error type=%s", type(error).__name__)
+        async for chunk in super().on_error(error):
+            yield ErrorChunk(error_text=CHAT_ERROR_CODE) if isinstance(chunk, ErrorChunk) else chunk
+
+
+class ChatAdapter(VercelAIAdapter):
+    def build_event_stream(self) -> ChatEventStream:
+        return ChatEventStream(
+            self.run_input,
+            accept=self.accept,
+            sdk_version=self.sdk_version,
+            server_message_id=self.server_message_id,
+        )
+
+
 @router.post("/chat")
 async def chat(request: Request) -> Response:
     """Streamt Antworten des Website-Assistenten als AI-SDK UI Message Stream (v6, SSE)."""
@@ -101,6 +135,10 @@ async def chat(request: Request) -> Response:
             raise HTTPException(
                 status_code=401, detail="Chat-Session ungültig oder abgelaufen"
             )
-    return await VercelAIAdapter.dispatch_request(
-        request, agent=agent, sdk_version=6, usage_limits=CHAT_USAGE_LIMITS
+    return await ChatAdapter.dispatch_request(
+        request,
+        agent=agent,
+        model=chat_model(),
+        sdk_version=6,
+        usage_limits=CHAT_USAGE_LIMITS,
     )

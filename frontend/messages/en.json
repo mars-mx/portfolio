@@ -82,7 +82,8 @@
     "consentAccept": "I have read and accept the privacy policy",
     "consentAcceptShort": "Accept privacy policy",
     "consentError": "That didn't work. Please try again.",
-    "errorRateLimit": "That was a bit too many messages. Please try again later."
+    "errorRateLimit": "That was a bit too many messages. Please try again later.",
+    "errorUnavailable": "The chat is currently unavailable. Please try again later or get in touch directly."
   },
   "contactMenu": {
     "whatsapp": "WhatsApp",

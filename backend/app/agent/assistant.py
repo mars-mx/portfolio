@@ -6,11 +6,14 @@ und antwortet nur auf Basis der Treffer.
 """
 
 import logging
+from functools import cache
 
 from pydantic_ai import Agent
 from pydantic_ai.capabilities import WebSearch
+from pydantic_ai.models import Model
 
 from app.agent.knowledge import get_knowledge_base, load_documents
+from app.agent.upstream import GuardedResponsesModel
 from app.core.config import settings
 
 logger = logging.getLogger("mxdigital")
@@ -61,6 +64,20 @@ agent = Agent(
     capabilities=[WebSearch()] if settings.web_search else [],
     defer_model_check=True,
 )
+
+
+@cache
+def chat_model() -> Model | str:
+    """Modell für /api/chat: OpenAI-Responses mit Fehler-Event-Erkennung.
+
+    Erst beim ersten Chat gebaut — AsyncOpenAI verweigert die Konstruktion
+    ohne API-Key, die App soll aber auch ohne Key starten. Andere Provider
+    laufen unverändert über den Modellstring.
+    """
+    provider, _, model_name = settings.ai_model.partition(":")
+    if provider in ("openai", "openai-responses"):
+        return GuardedResponsesModel(model_name)
+    return settings.ai_model
 
 
 @agent.instructions

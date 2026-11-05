@@ -25,7 +25,7 @@ make stop       # kill processes on both ports
 - `make dev`/`make backend`/`make frontend` automatically set `NEXT_PUBLIC_API_URL` and `CORS_ORIGINS` to match the chosen ports — if you start the servers manually instead, you must set these yourself or chat requests fail CORS.
 - Backend make targets load `backend/.env` via `uv run --env-file` (already-set env vars win). Secrets like `OPENAI_API_KEY` live there locally; the app itself has no dotenv code — SDKs read keys straight from the process environment.
 - Lint: `cd frontend && pnpm lint` (ESLint 9 + eslint-config-next). No Python linter is configured.
-- There is **no test suite** in either package.
+- Tests: backend only, `cd backend && uv run pytest` (pytest is a uv dev dependency; the Docker image installs `--no-dev`). The frontend has no test suite.
 
 ## Commit Style
 
